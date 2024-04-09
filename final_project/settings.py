@@ -37,10 +37,16 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "users.apps.UsersConfig",
     "shopping.apps.ShoppingConfig",
-    "fashion.apps.FashionConfig"
+    "users.apps.UsersConfig",
+    "fashion.apps.FashionConfig",
+    "crispy_forms",
+    "crispy_bootstrap5"
 ]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -78,8 +84,13 @@ WSGI_APPLICATION = "final_project.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "dd9mt2v324ga1f",
+        "USER": "u6j16oma8t0ftt",
+        "PASSWORD": "p074f22357a84b632084d2e1c9340c28007b2e1a577e042bf44c9ce01327b9008",
+        "HOST": "c7gljno857ucsl.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com",
+        "PORT": "5432"
+
     }
 }
 
@@ -124,3 +135,6 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+LOGIN_REDIRECT_URL = "/home"
+
