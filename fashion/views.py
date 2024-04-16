@@ -1,11 +1,9 @@
 from django.shortcuts import render
-import json
 import openmeteo_requests
 import requests_cache
 import pandas as pd
 from retry_requests import retry
 import random
-import os
 
 # Create your views here.
 
@@ -64,7 +62,7 @@ def weather(request):
 
     # Process daily data. The order of variables needs to be the same as requested.
     daily = response.Daily()
-    daily_temperature_2m_max = daily.Variables(0).ValuesAsNumpy()
+    daily_temperature_2m_max = daily.Variables(0).ValuesAsNumpy() 
     daily_temperature_2m_min = daily.Variables(1).ValuesAsNumpy()
     daily_uv_index_max = daily.Variables(2).ValuesAsNumpy()
     daily_precipitation_probability_max = daily.Variables(3).ValuesAsNumpy()
