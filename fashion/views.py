@@ -12,14 +12,10 @@ import os
 #@login_required
 def weather(request):
     """Shows the weather for the current day and suggests an 
-    appropriate outfit based on it. Should use either the 
-    OpenWeather or OpenMeteo API.
+    appropriate outfit based on it. 
 
-    Args:
-        request (_type_): _description_
-
-    Returns:
-        _type_: _description_
+    Returns weather using OpenMeteo API and based on the weather returns 
+    three random images from a gallery based on the types of weather.
     """
 
     # Setup the Open-Meteo API client with cache and retry on error
