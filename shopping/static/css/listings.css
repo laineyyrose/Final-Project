@@ -1,0 +1,15 @@
+.polaroid {
+    background-color: #fff;
+    padding: 1rem 1rem 4rem;
+    box-shadow: 5px 7px 4px #888888;
+  }
+  
+  img {
+    width: 19rem;
+  }
+  
+  figcaption {
+    color: #000;
+    text-align: center;
+  }
+  
