@@ -4,6 +4,8 @@ import openmeteo_requests
 import requests_cache
 import pandas as pd
 from retry_requests import retry
+import random
+import os
 
 # Create your views here.
 
@@ -31,7 +33,7 @@ def weather(request):
     params = {
         "latitude": 27.3364,
         "longitude": -82.5306,
-        "current": ["temperature_2m", "apparent_temperature"],
+        "current": ["temperature_2m", "apparent_temperature", "rain"],
         "daily": ["temperature_2m_max", "temperature_2m_min", "uv_index_max", "precipitation_probability_max"],
         "temperature_unit": "fahrenheit",
         "wind_speed_unit": "mph",
@@ -39,23 +41,30 @@ def weather(request):
         "timezone": "America/New_York",
         "forecast_days": 1
     }
-    responses = openmeteo.weather_api(url, params=params)
+    responses = openmeteo.weather_api(url, params=params) #this calls the openmeteo weather api
 
     # Process first location. Add a for-loop for multiple locations or weather models
     response = responses[0]
-    print(f"Coordinates {response.Latitude()}°N {response.Longitude()}°E")
-    print(f"Elevation {response.Elevation()} m asl")
-    print(f"Timezone {response.Timezone()} {response.TimezoneAbbreviation()}")
-    print(f"Timezone difference to GMT+0 {response.UtcOffsetSeconds()} s")
 
     # Current values. The order of variables needs to be the same as requested.
     current = response.Current()
-    current_temperature_2m = current.Variables(0).Value()
-    current_apparent_temperature = current.Variables(1).Value()
-
-    print(f"Current time {current.Time()}")
-    print(f"Current temperature_2m {current_temperature_2m}")
-    print(f"Current apparent_temperature {current_apparent_temperature}")
+    current_temperature_2m = round(current.Variables(0).Value())
+    current_apparent_temperature = round(current.Variables(1).Value())
+    current_rain = current.Variables(2).Value()
+    
+    #rain_status should be the display based on the weather
+    
+    image_display = []
+    image_numbers = random.sample(range(20), 3) #apparently this is bad on memory for large numbers, but we'll only have 20 images in total, so.
+    if current_rain == 0:
+        rain_status = 'Clear Skies'
+        image_display.extend([f"clear/clear{image_numbers[0]}.jpg", f"clear/clear{image_numbers[1]}.jpg", f"clear/clear{image_numbers[2]}.jpg"])
+    elif current_rain > 0.5:
+        rain_status = 'Raining'
+        image_display.extend([f"rain/rain{image_numbers[0]}.jpg", f"rain/rain{image_numbers[1]}.jpg", f"rain/rain{image_numbers[2]}.jpg"])
+    else:
+        rain_status = 'Sprinkling'
+        image_display.extend([f"sprinkle/sprinkle{image_numbers[0]}.jpg", f"sprinkle/sprinkle{image_numbers[1]}.jpg", f"sprinkle/sprinkle{image_numbers[2]}.jpg"])
 
     # Process daily data. The order of variables needs to be the same as requested.
     daily = response.Daily()
@@ -70,17 +79,17 @@ def weather(request):
         freq = pd.Timedelta(seconds = daily.Interval()),
         inclusive = "left"
     )}
-    daily_data["temperature_2m_max"] = daily_temperature_2m_max
-    daily_data["temperature_2m_min"] = daily_temperature_2m_min
-    daily_data["uv_index_max"] = daily_uv_index_max
-    daily_data["precipitation_probability_max"] = daily_precipitation_probability_max
+    daily_data["temperature_2m_max"] = [round(value, 1) for value in daily_temperature_2m_max]
+    daily_data["temperature_2m_min"] = [round(value, 1) for value in daily_temperature_2m_min]
+    daily_data["uv_index_max"] = [round(value, 1) for value in daily_uv_index_max]
+    daily_data["precipitation_probability_max"] = [round(value, 1) for value in daily_precipitation_probability_max]
 
-    daily_dataframe = pd.DataFrame(data = daily_data)
-    print(daily_dataframe)
 
     context = {
         'current_temp' : current_temperature_2m, # weather for the last 15 minutes
         'current_apparent' : current_apparent_temperature, # what it feels like for the past 15min
+        'rain_status' : rain_status,
+        'image_display' : image_display, #images for the carousel to display based on weather
         'daily_data': daily_data,  # weather for the day
     }
 
