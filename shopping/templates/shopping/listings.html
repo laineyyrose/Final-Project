@@ -1,17 +1,111 @@
 {% extends 'shopping/base.html' %}
-
+{% load static %}
 {% block title %} Shop {% endblock %}
-<link rel="stylesheet" href="{% static 'listings.css' %}">
+<link rel="stylesheet" href="{% static 'shopping/listings.css' %}">
 {% block content %}
-<h1>
-    Polaroid Picture 📸
-</h1>
-<figure class="polaroid">
-<img
-    src="images/grace-maher-lH3GNpsRsnU-unsplash.jpg"
-    alt="Polaroid Picture"
-/>
-<figcaption>Polaroids are Cool 😎</figcaption>
-</figure>
+<style>
+  .floating-container {
+    position: fixed;
+    width: 100px;
+    height: 100px;
+    bottom: 0;
+    right: 0;
+    margin: 0.5% 0.5%;
+  }
+  /*
+  .floating-container:hover {
+    height: 300px;
+  }
+  */
 
+  .btn-circle.btn-xl {
+    width: 70px;
+    height: 70px;
+    padding: 10px 16px;
+    border-radius: 35px;
+    font-size: 24px;
+    line-height: 1.33;
+}
+
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    padding: 6px 0px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.42857;
+}
+
+  div.polaroid {
+    width: 80%;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-bottom: 25px;
+  }
+
+  div.container {
+    text-align: center;
+    padding: 10px 20px;
+  }
+</style>
+
+<!-- Button trigger modal -->
+<div class="floating-container">
+  <button type="button" class="btn btn-primary btn-circle btn-xl" data-bs-toggle="modal" data-bs-target="#listingModal">
+    +
+  </button>
+</div>
+
+<!-- add listing modal, based off of Tre's modal from the calendar project -->
+<div class="modal fade" id="listingModal" tabindex="-1" aria-labelledby="listingModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="eventModalLabel">Post Item</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Add Event Form -->
+          <form method="POST" id="addItem" action="url"> <!-- THIS IS A SEPERATE VIEW FUNCTION I THINK-->
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="itemPhoto" class="form-label">Upload photo of item</label>
+                <input class="form-control" type="file" id="itemPhoto">              
+              </div>              
+              <div class="form-group">
+                  <label for="itemName">Item Name:</label>
+                  <input type="text" class="form-control" id="itemName" name="title" required>
+              </div>
+              <div class="form-group">
+                  <label for="itemPrice">Price:</label>
+                  <input type="number" class="form-control" id="itemPrice" name="price" required>
+              </div>
+              <div class="form-group">
+                  <label for="itemDescription">Description:</label>
+                  <input type="text" class="form-control" id="eventDescription" name="description">
+              </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" name="add_item" class="btn btn-outline-info">Add</button>
+        <!-- Footer, put buttons here-->
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!--
+<ul class="polaroids"> 
+    <li>
+        <div class="polaroid">
+            <img src="img_5terre.jpg" alt="5 Terre" style="width:100%">
+            <div class="container">
+            <p>Cinque Terre</p>
+            </div>
+          </div>
+    </li>
+ </ul>
+ -->
+ 
 {% endblock %}

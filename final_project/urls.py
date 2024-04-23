@@ -23,6 +23,9 @@ from fashion import views as fashion_views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+
+    # Shopping URLs
+    path('listings/', shopping_views.listings, name='listings'),
     
     # Fashion URLs
     path('weather/', fashion_views.weather, name='weather'),
