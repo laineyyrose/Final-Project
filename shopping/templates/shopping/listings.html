@@ -1,4 +1,4 @@
-{% extends 'shopping/base.html' %}
+{% extends 'users/base.html' %}
 {% load static %}
 {% block title %} Shop {% endblock %}
 <link rel="stylesheet" href="{% static 'shopping/listings.css' %}">
@@ -94,6 +94,27 @@
       </div>
     </div>
   </div>
+
+<!-- ITEMS -->
+<div class="container text-center">
+  <div class="row"> <!-- break off into a new row every 5 -->
+    <div class="col">
+      <div class="card p-1 rounded-0" style="width: 18rem;">
+        <div class="card-body"> <!-- add hover affect to text later -->
+          <img src="https://dummyimage.com/600x400/000/fff" class="img-thumbnail rounded-0" alt="...">
+          <h5 class="card-title">PRICE - ITEM TITLE</h5> 
+          <p class="card-text">USER</p>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      Column
+    </div>
+    <div class="col">
+      Column
+    </div>
+  </div>
+</div>
 
 <!--
 <ul class="polaroids"> 
