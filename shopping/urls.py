@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 from users import views as userviews #this is to avoid conflicts, it fucks w the other views if not
 
