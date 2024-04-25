@@ -83,14 +83,9 @@ WSGI_APPLICATION = "final_project.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "dd9mt2v324ga1f",
-        "USER": "u6j16oma8t0ftt",
-        "PASSWORD": "p074f22357a84b632084d2e1c9340c28007b2e1a577e042bf44c9ce01327b9008",
-        "HOST": "c7gljno857ucsl.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com",
-        "PORT": "5432"
-
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -137,4 +132,4 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGIN_REDIRECT_URL = "/home"
-
+LOGOUT_REDIRECT_URL = "/login"
