@@ -1,5 +1,5 @@
 {% extends 'users/base.html' %}
-{% load static %}
+{% load static %} {% load l10n %}
 {% block title %} Shop {% endblock %}
 <link rel="stylesheet" href="{% static 'shopping/listings.css' %}">
 {% block content %}
@@ -37,96 +37,98 @@
     line-height: 1.42857;
 }
 
-  div.polaroid {
-    width: 80%;
-    background-color: white;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    margin-bottom: 25px;
-  }
+.img-thumbnail {
+  max-width: 250px;
+  max-height: 250px;
+  object-fit: cover;
+  width: auto; /* Ensures that the width is not stretched beyond the maximum */
+  height: auto; /* Ensures that the height is not stretched beyond the maximum */
+}
 
-  div.container {
-    text-align: center;
-    padding: 10px 20px;
-  }
+.itemPrice { /* FIX */
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='calc(1.5em + .75rem + 2px)' width='100%'><text x='2' y='13' fill='gray' font-size='12' font-family='arial'>$</text></svg>");
+  padding-left: 12px;
+  background-repeat: no-repeat;
+}
 </style>
+<script>
+  function checkFile(input) { //GPT generated function
+        const file = input.files[0];
+        const fileType = file.type.toLowerCase();
+        const allowedExtensions = ["image/jpeg", "image.jpg", "image/png"];
+
+        // Check file type
+        if (!allowedExtensions.includes(fileType)) {
+            alert("Please select a valid image file (JPG, JPEG, PNG).");
+            input.value = ''; // Clear the file input
+            return;
+        }
+
+        // Check file size
+        const maxSizeBytes = maxSizeMB * 1024 * 1024; // Convert MB to bytes
+        if (file.size > maxSizeBytes) {
+            alert("File size cannot exceed 1MB.");
+            input.value = ''; // Clear the file input
+            return;
+        }
+    }
+</script>
 
 <!-- Button trigger modal -->
 <div class="floating-container">
-  <button type="button" class="btn btn-primary btn-circle btn-xl" data-bs-toggle="modal" data-bs-target="#listingModal">
+  <button type="button" class="btn btn-primary btn-circle btn-xl" data-bs-toggle="modal" data-bs-target="#listingModal"> 
     +
   </button>
 </div>
 
 <!-- add listing modal, based off of Tre's modal from the calendar project -->
-<div class="modal fade" id="listingModal" tabindex="-1" aria-labelledby="listingModalLabel" aria-hidden="true">
+<div class="modal fade" id="listingModal" tabindex="-1" aria-labelledby="listingModalLabel" aria-hidden="true"> <!-- USES add_item VIEW FUNCTION; the enctype allows this form WITHOUT using the django form!-->
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="eventModalLabel">Post Item</h5>
+          <h5 class="modal-title" id="listingsModalLabel">Post Item</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <!-- Add Event Form -->
-          <form method="POST" id="addItem" action="url"> <!-- THIS IS A SEPERATE VIEW FUNCTION I THINK-->
+          <form method="POST" id="addItem" action="{% url 'add-item' %}" enctype='multipart/form-data'> <!-- THIS IS A SEPERATE VIEW FUNCTION I THINK-->
               {% csrf_token %}
+              <!--{{ form }}-->
               <div class="form-group">
                 <label for="itemPhoto" class="form-label">Upload photo of item</label>
-                <input class="form-control" type="file" id="itemPhoto">              
+                <input type="file" class="form-control" accept="image/png, image/jpeg, image/jpg" onchange="checkFile(this)" id="itemImage" name="image" required>              
               </div>              
               <div class="form-group">
                   <label for="itemName">Item Name:</label>
-                  <input type="text" class="form-control" id="itemName" name="title" required>
+                  <input type="text" placeholder="What your item is (Max 50 characters.)" aria-placeholder="What your item is (Max 50 characters.)" class="form-control" id="itemName" name="name" required>
               </div>
               <div class="form-group">
                   <label for="itemPrice">Price:</label>
-                  <input type="number" class="form-control" id="itemPrice" name="price" required>
+                  <input type="number" class="itemPrice form-control" id="itemPrice" name="price" step=".01" min="0" max="10" required>
               </div>
               <div class="form-group">
                   <label for="itemDescription">Description:</label>
-                  <input type="text" class="form-control" id="eventDescription" name="description">
+                  <textarea class="form-control" placeholder="Describe your item here... (Max 250 characters.)" aria-placeholder="Describe your item here... (Max 250 characters.)" id="itemDescription" name="description" style="height: 100px" maxlength ="250"></textarea>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" name="add_item" class="btn btn-outline-info">Post</button>
+              <!-- Footer, put buttons here-->
               </div>
           </form>
-        </div>
-        <div class="modal-footer">
-          <button type="submit" name="add_item" class="btn btn-outline-info">Add</button>
-        <!-- Footer, put buttons here-->
         </div>
       </div>
     </div>
   </div>
 
 <!-- ITEMS -->
-<div class="container text-center">
-  <div class="row"> <!-- break off into a new row every 5 -->
-    <div class="col">
-      <div class="card p-1 rounded-0" style="width: 18rem;">
-        <div class="card-body"> <!-- add hover affect to text later -->
-          <img src="https://dummyimage.com/600x400/000/fff" class="img-thumbnail rounded-0" alt="...">
-          <h5 class="card-title">PRICE - ITEM TITLE</h5> 
-          <p class="card-text">USER</p>
-        </div>
-      </div>
+{% for item in item_display %}
+  <div class="card p-1 rounded-0" style="width: 18rem;">
+    <div class="card-body">
+      <img src="{{ item.image.url }}" class="img-thumbnail rounded-0" alt="...">
+      <h5 class="card-title">${{ item.price|localize }} - {{ item.name }}</h5> 
+      <p class="card-text"> {{ item.user }}</p>
     </div>
-    <div class="col">
-      Column
-    </div>
-    <div class="col">
-      Column
-    </div>
-  </div>
 </div>
-
-<!--
-<ul class="polaroids"> 
-    <li>
-        <div class="polaroid">
-            <img src="img_5terre.jpg" alt="5 Terre" style="width:100%">
-            <div class="container">
-            <p>Cinque Terre</p>
-            </div>
-          </div>
-    </li>
- </ul>
- -->
+{% endfor %}
  
 {% endblock %}
