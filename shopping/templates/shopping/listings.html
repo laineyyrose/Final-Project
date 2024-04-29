@@ -38,11 +38,9 @@
 }
 
 .img-thumbnail {
-  max-width: 250px;
-  max-height: 250px;
+  width: 250px;
+  height: 250px;
   object-fit: cover;
-  width: auto; /* Ensures that the width is not stretched beyond the maximum */
-  height: auto; /* Ensures that the height is not stretched beyond the maximum */
 }
 
 .itemPrice { /* FIX */
@@ -104,7 +102,7 @@
               </div>
               <div class="form-group">
                   <label for="itemPrice">Price:</label>
-                  <input type="number" class="itemPrice form-control" id="itemPrice" name="price" step=".01" min="0" max="10" required>
+                  <input type="number" class="itemPrice form-control" id="itemPrice" name="price" step=".01" min="0" maxlength="10" required>
               </div>
               <div class="form-group">
                   <label for="itemDescription">Description:</label>
@@ -121,14 +119,29 @@
   </div>
 
 <!-- ITEMS -->
-{% for item in item_display %}
-  <div class="card p-1 rounded-0" style="width: 18rem;">
-    <div class="card-body">
-      <img src="{{ item.image.url }}" class="img-thumbnail rounded-0" alt="...">
-      <h5 class="card-title">${{ item.price|localize }} - {{ item.name }}</h5> 
-      <p class="card-text"> {{ item.user }}</p>
-    </div>
+<div class="container mt-3">
+  <div class="row">
+    {% for item in item_display %}
+      {% if forloop.counter0|divisibleby:5 %}
+        </div><div class="row">
+      {% endif %}
+      <div class="col">
+        <div class="card p-1 rounded-0 mb-3" style="width: 18rem;">
+          <div class="card-body">
+            <img src="{{ item.image.url }}" class="img-thumbnail rounded-0" alt="Image of {{item.name}}">
+            <h5 class="card-title"> 
+              <a href="{% url 'item' item.id %}"> {{ item.name }} </a>
+            </h5> 
+            <p class="card-text"> ${{ item.price|localize }} - @{{ item.user }}</p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
 </div>
-{% endfor %}
+
+
+
+
  
 {% endblock %}

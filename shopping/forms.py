@@ -1,5 +1,5 @@
 from django import forms
-from .models import Item
+from .models import Item, Comment
 
 class AddItem(forms.ModelForm):
     """
@@ -26,3 +26,14 @@ class EditItem(forms.ModelForm):
     class Meta:
         model = Item
         fields = ['image', 'name', 'price', 'description'] #same stuff, just lets you edit it
+
+class AddComment(forms.ModelForm):
+    """
+    A form for adding comments to an item. Allows users to add a comment to an item.
+
+    model (Model): the Item model from shopping's models.py.
+        fields (list): a list of fields that can be edited in the form. Image, name, price, and description. Should be pre-populated with the current values of the item.
+    """
+    class Meta:
+        model = Comment
+        fields = ['comment'] #just the comment, the user and item are auto-filled

@@ -8,7 +8,8 @@ urlpatterns = [
     path('', userviews.home, name='home'),
     path('listings/', views.listings, name='listings'),
     path('listings/new/', views.add_item, name='add-item'),
-    #path('listings/<int:pk>/delete/', views.item_delete, name='item-delete'),
+    path('listings/<int:pk>/delete/', views.delete_item, name='delete-item'),
+    path('item/<int:pk>', views.item, name='item'),
 ] 
 if settings.DEBUG:
         urlpatterns += static(settings.MEDIA_URL,
