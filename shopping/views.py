@@ -12,6 +12,7 @@ from shopping.forms import AddItem
 @login_required
 def listings(request):
     """
+    Author: Andy
     Displays all items in the database in descending order of date posted.
 
     Args:
@@ -20,10 +21,23 @@ def listings(request):
     Returns:
         render: A render object that displays the listings.html template with all items in the database.
     """
-    try: 
-        item_display = Item.objects.all().order_by('-date_posted')
-    except Item.ObjectDoesNotExist: #TODO - go back and make sure this is the right exception
-        item_display = {"No postings right now. Why not add something of your own?"}
+    if request.method == 'GET':
+        try: 
+            min_price = request.GET.get('min_price')
+            max_price = request.GET.get('max_price')
+
+            # Assuming you have a queryset called item_display
+            item_display = Item.objects.all()
+
+            # Filter by minimum price if provided
+            if min_price is not None:
+                item_display = item_display.filter(price__gte=min_price)
+
+            # Filter by maximum price if provided
+            if max_price is not None:
+                item_display = item_display.filter(price__lte=max_price)
+        except Item.objects.all() == None:
+            item_display = {"No postings right now. Why not add something of your own?"}
 
     context = {
         'item_display' : item_display
@@ -34,6 +48,7 @@ def listings(request):
 @login_required
 def add_item(request): #the action tag on the form leads here
     """
+    Author: Andy
     Adds a new item to the Item database.
     
     Args:
@@ -51,9 +66,11 @@ def add_item(request): #the action tag on the form leads here
         return redirect('listings')
     return redirect('listings')
 
+#Andy
 @login_required
 def delete_item(request, pk):
     """
+    Author: Andy
     Deletes item from  Item database.
     
     Args:
@@ -73,7 +90,8 @@ def delete_item(request, pk):
 
 @login_required
 def item(request, pk):
-    """
+    """ 
+    Author: Andy
     Displays a single item from the listings database and comments associated with it.
 
     Args:

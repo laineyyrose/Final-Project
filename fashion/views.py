@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 import openmeteo_requests
 import requests_cache
 import pandas as pd
@@ -7,13 +8,22 @@ import random
 
 # Create your views here.
 
-#@login_required
+@login_required
 def weather(request):
-    """Shows the weather for the current day and suggests an 
+    """
+    Author: Andy
+    Shows the weather for the current day and suggests an 
     appropriate outfit based on it. 
 
     Returns weather using OpenMeteo API and based on the weather returns 
     three random images from a gallery based on the types of weather.
+
+    Args:
+        request (HttpRequest): The request object used to generate this view. 
+
+    Returns:
+        return (render): A render object that displays the weather.html template with the weather daily (24hr) 
+        data and current (15min) data, and a list of urls for the images to display.
     """
 
     # Setup the Open-Meteo API client with cache and retry on error

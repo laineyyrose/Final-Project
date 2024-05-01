@@ -3,7 +3,9 @@
 {% block title %} Shop {% endblock %}
 <link rel="stylesheet" href="{% static 'shopping/listings.css' %}">
 {% block content %}
-<style>
+<!-- ANDY WORKED ON THIS ONE -->
+<!-- It's good to keep things like css/js seperated, but this causes less issues for hosting.-->
+<style> 
   .floating-container {
     position: fixed;
     width: 100px;
@@ -11,6 +13,7 @@
     bottom: 0;
     right: 0;
     margin: 0.5% 0.5%;
+    z-index: 1; /* Ensure hover button appears above cards */
   }
   /*
   .floating-container:hover {
@@ -48,6 +51,16 @@
   padding-left: 12px;
   background-repeat: no-repeat;
 }
+
+
+.card {
+  transition: transform 0.3s ease;
+}
+
+.card:hover { /* hover is by gpt */
+  transform: translateY(-5px); /* Adjust the distance you want the card to move */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 </style>
 <script>
   function checkFile(input) { //GPT generated function
@@ -72,14 +85,14 @@
     }
 </script>
 
-<!-- Button trigger modal -->
+<!-- Button trigger modal for posting items -->
 <div class="floating-container">
   <button type="button" class="btn btn-primary btn-circle btn-xl" data-bs-toggle="modal" data-bs-target="#listingModal"> 
     +
   </button>
 </div>
 
-<!-- add listing modal, based off of Tre's modal from the calendar project -->
+<!-- add item to listing modal, based off of Tre's modal from the calendar project -->
 <div class="modal fade" id="listingModal" tabindex="-1" aria-labelledby="listingModalLabel" aria-hidden="true"> <!-- USES add_item VIEW FUNCTION; the enctype allows this form WITHOUT using the django form!-->
     <div class="modal-dialog">
       <div class="modal-content">
@@ -88,8 +101,8 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <!-- Add Event Form -->
-          <form method="POST" id="addItem" action="{% url 'add-item' %}" enctype='multipart/form-data'> <!-- THIS IS A SEPERATE VIEW FUNCTION I THINK-->
+          <!-- Add Item Form -->
+          <form method="POST" id="addItem" action="{% url 'add-item' %}" enctype='multipart/form-data'> <!-- THIS TRIGGERS THE add_item VIEW FUNCTION-->
               {% csrf_token %}
               <!--{{ form }}-->
               <div class="form-group">
@@ -119,26 +132,33 @@
   </div>
 
 <!-- ITEMS -->
-<div class="container mt-3">
-  <div class="row">
-    {% for item in item_display %}
-      {% if forloop.counter0|divisibleby:5 %}
-        </div><div class="row">
-      {% endif %}
-      <div class="col">
-        <div class="card p-1 rounded-0 mb-3" style="width: 18rem;">
-          <div class="card-body">
-            <img src="{{ item.image.url }}" class="img-thumbnail rounded-0" alt="Image of {{item.name}}">
-            <h5 class="card-title"> 
-              <a href="{% url 'item' item.id %}"> {{ item.name }} </a>
-            </h5> 
-            <p class="card-text"> ${{ item.price|localize }} - @{{ item.user }}</p>
+<div class="container-fluid mt-3">
+  <p> Filter by price: </p> <!-- TODO COME BACK HERE -->
+  <form action="{% url 'listings' %}" method="GET">
+    <input type="number" id="price_filter" name="min_price" placeholder="Min price" min="0" value="{{ request.GET.min_price }}">
+    <input type="number" name="max_price" placeholder="Max price" min="0" value="{{ request.GET.max_price }}">
+    <button type="submit" class="btn btn-primary">Filter</button>
+  </form>
+  <div class="itemcards container-fluid mt-4">
+    <div class="row row-cols-5 row-cols-md-5 row-cols-sm-3 g-4"> <!-- Use row-cols-{x} to specify the number of columns per row -->
+      {% for item in item_display %}
+        <div class="col"> <!-- Each card occupies one column -->
+          <div class="card h-100 rounded-0" style="max-width: 18rem;"> <!-- Set height to 100% to ensure all cards have the same height -->
+            <div class="card-body">
+              <img src="{{ item.image.url }}" class="img-thumbnail rounded-0 w-80" alt="Image of {{item.name}}">
+              <h5 class="card-title mt-1">
+                <a class="stretched-link" href="{% url 'item' item.id %}"> {{ item.name }} </a>
+                <span class="" style="float:right;">$ {{ item.price|localize }}</span>
+              </h5>
+              <p class="card-text"> <a href="{% url 'profile' %}">@{{ item.user }} </a></p> <!-- fix when adding lainey's stuff -->
+            </div>
           </div>
         </div>
-      </div>
-    {% endfor %}
-  </div>
+      {% endfor %}
+    </div>
+  </div>  
 </div>
+
 
 
 
