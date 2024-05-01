@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods, require_POST
 from django.http import HttpResponseForbidden
-from shopping.forms import AddItem
+from shopping.forms import AddItem, EditItem, AddComment
 
 
 # Create your views here.
@@ -87,6 +87,29 @@ def delete_item(request, pk):
         return redirect('listings')
     else:
         return HttpResponseForbidden()
+    
+@login_required
+def edit_item(request, pk):
+    """_summary_
+
+    Args:
+        request (_type_): _description_
+        pk (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
+    item = get_object_or_404(Item, pk=pk)
+    if request.user != item.user:
+        return HttpResponseForbidden()
+    if request.method == 'POST':
+        form = EditItem(request.POST, request.FILES, instance=item)
+        if form.is_valid():
+            form.save()
+            return redirect('item', pk=pk)
+    else:
+        form = EditItem(instance=item)
+    return render(request, 'shopping/edit_item.html', {'form': form})
 
 @login_required
 def item(request, pk):
@@ -109,3 +132,26 @@ def item(request, pk):
         'comments' : comments,
     }
     return render(request, 'shopping/item.html', context)
+
+@login_required
+def add_comment(request, pk):
+    """
+    Author: Andy
+    Adds a comment to an item in the database.
+
+    Args:
+        request (HttpRequest): The request object used to generate this view.
+        pk (int): The primary key of the item to be commented on and redirected to after posting.
+
+    Returns:
+        render: A render object that displays the item.html template with the item specified by the primary key, with added comment.
+    """
+    item = Item.objects.get(pk=pk)
+    comment_form = AddComment(request.POST)
+    if comment_form.is_valid():
+        new_comment = comment_form.save(commit=False)
+        new_comment.user = request.user
+        new_comment.item = item
+        new_comment.save()
+        return redirect('item', pk=pk)
+    return redirect('item', pk=pk)

@@ -13,7 +13,7 @@
     bottom: 0;
     right: 0;
     margin: 0.5% 0.5%;
-    z-index: 1; /* Ensure hover button appears above cards */
+    z-index: 3; /* the z index might get a little crazy but it keeps it from conflicting with stretched links */
   }
   /*
   .floating-container:hover {
@@ -131,14 +131,19 @@
     </div>
   </div>
 
-<!-- ITEMS -->
+
 <div class="container-fluid mt-3">
-  <p> Filter by price: </p> <!-- TODO COME BACK HERE -->
+  <!-- PRICE FILTER -->
+  <p> Filter by price: </p> 
   <form action="{% url 'listings' %}" method="GET">
-    <input type="number" id="price_filter" name="min_price" placeholder="Min price" min="0" value="{{ request.GET.min_price }}">
-    <input type="number" name="max_price" placeholder="Max price" min="0" value="{{ request.GET.max_price }}">
+    <span> $ </span>
+    <input type="number" style="max-width: 10%;" name="min_price" placeholder="Min price" min="0" value="{{ request.GET.min_price }}">
+    <span> - $</span>
+    <input type="number" style="max-width: 10%;" name="max_price" placeholder="Max price" min="0" value="{{ request.GET.max_price }}">
     <button type="submit" class="btn btn-primary">Filter</button>
-  </form>
+    <a class="btn btn-secondary" href="{% url 'listings'%}">Clear</a>
+  </form> 
+  <!-- ITEMS -->
   <div class="itemcards container-fluid mt-4">
     <div class="row row-cols-5 row-cols-md-5 row-cols-sm-3 g-4"> <!-- Use row-cols-{x} to specify the number of columns per row -->
       {% for item in item_display %}
@@ -147,10 +152,10 @@
             <div class="card-body">
               <img src="{{ item.image.url }}" class="img-thumbnail rounded-0 w-80" alt="Image of {{item.name}}">
               <h5 class="card-title mt-1">
-                <a class="stretched-link" href="{% url 'item' item.id %}"> {{ item.name }} </a>
+                <a class="stretched-link" href="{% url 'item' item.id %}"> {{ item.name|truncatechars:20 }} </a>
                 <span class="" style="float:right;">$ {{ item.price|localize }}</span>
               </h5>
-              <p class="card-text"> <a href="{% url 'profile' %}">@{{ item.user }} </a></p> <!-- fix when adding lainey's stuff -->
+              <p class="card-text"> @{{ item.user }} </p> <!-- fix when adding lainey's stuff -->
             </div>
           </div>
         </div>

@@ -36,4 +36,4 @@ class AddComment(forms.ModelForm):
     """
     class Meta:
         model = Comment
-        fields = ['comment'] #just the comment, the user and item are auto-filled
+        fields = ['comment'] #just the comment & whether if it's a reply, the user and item are auto-filled

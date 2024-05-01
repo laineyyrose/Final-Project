@@ -21,6 +21,9 @@ class Item(models.Model):
     def __str__(self):
         return self.name
     
+    def get_absolute_url(self):
+        return reverse('item', kwargs={'pk': self.pk})
+    
 class Comment(models.Model):
     """
     Models for the comments on the items in the database that will display on the item page.
