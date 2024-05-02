@@ -1,8 +1,12 @@
 from django import forms
 from .models import Item, Comment
 
+# WORD TO THE WISE: If you use an imagefield in any of your forms, 
+# be sure to include the 'enctype="multipart/form-data"' attribute in the form tag in your template!
+
 class AddItem(forms.ModelForm):
     """
+    Author: Andy
     A Django form for creating and updating item objects. 
     Allows users to create or update an item with an image, name, price, and description.
 
@@ -17,6 +21,7 @@ class AddItem(forms.ModelForm):
 
 class EditItem(forms.ModelForm):
     """
+    Author: Andy
     For editing items already made, allows users to edit the image, name, price, and description of an item.
 
     Args:
@@ -37,6 +42,7 @@ class EditItem(forms.ModelForm):
 
 class AddComment(forms.ModelForm):
     """
+    Author: Andy
     A form for adding comments to an item. Allows users to add a comment to an item.
 
     model (Model): the Item model from shopping's models.py.

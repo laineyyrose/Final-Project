@@ -22,21 +22,22 @@ def listings(request):
         render: A render object that displays the listings.html template with all items in the database.
     """
     if request.method == 'GET':
-        try: 
-            min_price = request.GET.get('min_price')
-            max_price = request.GET.get('max_price')
+        
+        min_price = request.GET.get('min_price', '')
+        max_price = request.GET.get('max_price', '')
 
-            # Assuming you have a queryset called item_display
-            item_display = Item.objects.all()
+        # Assuming you have a queryset called item_display
+        item_display = Item.objects.all()
 
-            # Filter by minimum price if provided
-            if min_price is not None:
-                item_display = item_display.filter(price__gte=min_price)
+        # Filter by minimum price if provided
+        if min_price is not '':
+            item_display = item_display.filter(price__gte=min_price)
 
-            # Filter by maximum price if provided
-            if max_price is not None:
-                item_display = item_display.filter(price__lte=max_price)
-        except Item.objects.all().exists() == False:
+        # Filter by maximum price if provided
+        if max_price is not '':
+            item_display = item_display.filter(price__lte=max_price)
+
+        if Item.objects.all().exists() == False:
             item_display = {}
 
     context = {

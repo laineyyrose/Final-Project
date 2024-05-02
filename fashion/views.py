@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-import openmeteo_requests
+from django.utils import timezone
+import openmeteo_requests #OPENMETEO API IMPORTS (all the way down to random) - DO NOT TOUCH!
 import requests_cache
 import pandas as pd
 from retry_requests import retry
@@ -47,8 +48,17 @@ def weather(request):
     }
     responses = openmeteo.weather_api(url, params=params) #this calls the openmeteo weather api
 
-    # Process first location. Add a for-loop for multiple locations or weather models
-    response = responses[0]
+    response = responses[0] #this is the response for the API call
+
+    # Get the date and time of the weather update
+    update_time = pd.to_datetime(response.Current().Time(), unit='s', utc=True)
+
+    # Convert the UTC time to the local timezone
+    local_update_time = update_time.tz_convert('America/New_York')
+
+    # Format the local update time as a string to display
+    update_time_str = local_update_time.strftime("Updated %B %d, %Y, %I:%M %p")
+
 
     # Current values. The order of variables needs to be the same as requested.
     current = response.Current()
@@ -88,13 +98,13 @@ def weather(request):
     daily_data["uv_index_max"] = [round(value, 1) for value in daily_uv_index_max]
     daily_data["precipitation_probability_max"] = [round(value, 1) for value in daily_precipitation_probability_max]
 
-
     context = {
         'current_temp' : current_temperature_2m, # weather for the last 15 minutes
         'current_apparent' : current_apparent_temperature, # what it feels like for the past 15min
         'rain_status' : rain_status,
         'image_display' : image_display, #images for the carousel to display based on weather
         'daily_data': daily_data,  # weather for the day
+        'update_time': update_time_str # last time the weather was updated
     }
 
     return render(request, 'fashion/weather.html', context)

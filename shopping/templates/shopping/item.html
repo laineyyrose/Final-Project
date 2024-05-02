@@ -1,7 +1,8 @@
 {% extends 'shopping/base.html' %}
 
 {% load static %}
-{% load l10n %}
+{% load l10n %} <!-- for the price comma seperators. don't touch this or tz, please! -->
+{% load tz %} <!-- to set it to florida timezone w/ filters later. i would ideally like this set to any device's timezone, but screwing with middleware feels like asking for bugs... -->
 
 {% block title %} {{ item.name }} - Shop {% endblock %}
 
@@ -86,6 +87,7 @@
 </div>
 
 
+
 <!-- GENERAL ITEM INFO DISPLAY -->
 <div class="container">
   <a class="btn btn-primary mt-2 mb-2" href="{% url 'listings' %}">Back to listings...</a> <!-- make this cute later -->
@@ -97,11 +99,11 @@
       <h2>{{ item.name }}</h2>
       <h4 class="price">${{ item.price|localize }}</h4>
       <p><a class="badge text-bg-secondary" href="">@{{ item.user }}</a></p> <!-- insert link to profiles here -->
-      <p> {{ item.description }} <br> <small> Posted {{ item.date_posted }} </small></p>
+      <p> {{ item.description }} <br> <small> Posted {{ item.date_posted|timezone:"America/New_York" }} </small></p>
       {% if item.user == request.user %}
       <div class="user-options mt-2 mb-2">
-        <button data-bs-toggle="modal" data-bs-target="#editModal" class="btn btn-outline-primary">Edit</button>
-        <button data-bs-toggle="modal" data-bs-target="#deleteModal" class="btn btn-outline-danger">Delete</button>
+        <button data-bs-toggle="modal" data-bs-target="#editModal" aria-label="Edit" class="btn btn-outline-primary">Edit</button>
+        <button data-bs-toggle="modal" data-bs-target="#deleteModal" aria-label="Delete" class="btn btn-outline-danger">Delete</button>
       </div>
       {% endif %}
       <!-- only do this if she for real wants a fake cart :(
@@ -112,6 +114,7 @@
       </form>
       -->
       <button onclick="generateMailtoLink()" title="Contact seller via email" rel="noreferrer noopener" class="btn btn-primary">Contact seller</button> 
+      <!-- clicking this opens the user's mail client and populates the email with an email about interest. this is since we can't have a payment portal, and other local-based second-hand sites like craigslist use this method. :) -->
     
       <!-- COMMENT SECTION -->
       <h3 class="mt-2">Comments</h3>
@@ -128,17 +131,17 @@
       {% else %}
         {% for comment in comments %}
           <div class="card p-1 rounded-0 mb-3" style="width: 30rem;">
-            <div class="card-body">
+            <div class="card-body pb-0">
               {% if comment.user == request.user %} {%  if comment.comment != 'This comment has been deleted.'%}
-              <button class="btn-close" style="float:right;" data-bs-toggle="modal" data-bs-target="#deleteCommentModal" title="Delete post (only deletes text)"></button>
+              <button class="btn-close" style="float:right;" data-bs-toggle="modal" aria-label="Delete" data-bs-target="#deleteCommentModal" title="Delete post (only deletes text)"></button>
               {% endif %} {% endif %}
               <h5 class="card-title">{{ comment.user }}</h5> <!-- ADD LINK TO USER PROFILE LATER -->
               {% if comment.comment == 'This comment has been deleted.' %} <p><i>{{ comment.comment }}</p> </i> {% else %} <p>{{ comment.comment }}</p> {% endif %}
-              <p><small>{{ comment.date_posted }}</small></p>
+              <p><small>{{ comment.date_posted|timezone:"America/New_York" }}</small></p>
             </div>
           </div>
 
-          <!-- delete comment modal; i'd keep it by the others, but this works best for the unique pks -->
+          <!-- delete comment modal; i'd keep it by the others, but this works best for the unique pks if it's inside of the loop -->
           <div class="modal fade" id="deleteCommentModal" tabindex="-1" aria-labelledby="deleteCommentModalLabel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
