@@ -6,7 +6,6 @@ from django.conf.urls.static import static
 from .views import HomeView, ArticleDetailView, AddPostView
 
 urlpatterns = [
-    path('', userviews.home, name='home'),
     path('listings/', views.listings, name='listings'),
     path('listings/new/', views.add_item, name='add-item'),
     path('listings/<int:pk>/delete/', views.delete_item, name='delete-item'),

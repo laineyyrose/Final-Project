@@ -1,14 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Post!</h1>
-
-<ul>
-{% for post in object_list %}
-    <li><a href="{% url 'article-detail' post.pk %}">
-    {{post.title}}</a> - {{post.author.first_name}} 
-    {{post.author.last_name}} <br/>
-    {{post.body}}</li>
-{% endfor %}
-</ul>
+    <h1>Welcome to Our Website!</h1>
+    <p>Thank you for visiting our site. We are excited to have you here.</p>
+    <p>Feel free to explore and discover all the amazing features we have to offer.</p>
 {% endblock %}

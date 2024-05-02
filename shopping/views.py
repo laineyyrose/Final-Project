@@ -183,8 +183,6 @@ def delete_comment(request, pk):
     else:
         return HttpResponseForbidden()
     
-def home(request):
-    return render(request, 'home.html', {})
 
 class HomeView(ListView):
     model = Post

@@ -34,7 +34,9 @@
     background-color: var(--bs-warning);
     border-color: var(--bs-warning);
   }
-  
+  body {
+    background-color: #c4a1c8; /* Replace with your desired color */
+  }
   /* Override Navbar colors */
   .navbar {
     background-color: var(--bs-primary);

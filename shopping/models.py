@@ -16,7 +16,7 @@ class Item(models.Model):
     description = models.CharField(max_length=250, null=True)
     date_posted = models.DateTimeField(default=timezone.now)
 
-    user = models.ForeignKey(User,on_delete=models.CASCADE,)
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -30,7 +30,7 @@ class Comment(models.Model):
     Should have capability to display the comment, the user who posted it, and the item it is posted on.
     """    
     comment = models.CharField(max_length=250) #might be bad naming practice
-    user = models.ForeignKey(User,on_delete=models.PROTECT,) #when the user is deleted, the comment is protected
+    user = models.OneToOneField(User, null=True, on_delete=models.PROTECT) #when the user is deleted, the comment is protected (LAINEY: do we wanna make it delete their comments though?)
     item = models.ForeignKey(Item,on_delete=models.CASCADE,)
     date_posted = models.DateTimeField(default=timezone.now)
 
@@ -44,8 +44,7 @@ class Comment(models.Model):
     def get_absolute_url(self):
         return reverse('comment', kwargs={'pk': self.pk})
 
-from django.contrib.auth.models import User
-from django.urls import reverse
+
 
 class Post(models.Model):
     title = models.CharField(max_length=255)
