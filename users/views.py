@@ -1,41 +1,24 @@
-from django.shortcuts import render, redirect
-from .forms import RegisterForm, EditProfileForm
-from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.shortcuts import render
 from django.views import generic
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.urls import reverse_lazy
+from django.shortcuts import redirect
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required 
+from .forms import SignUpForm, EditProfileForm, ProfilePageForm
+from django.views.generic import DetailView, CreateView
+from shopping.models import Profile
+from django.shortcuts import get_object_or_404
 
-# Create your views here.
-@login_required(login_url='/login')
-def home(request):
-    user = request.user
-    if not user.is_authenticated:
-        return redirect('login') 
-    else:
-        return render(request, 'users/home.html', {})
-        # return render(request, 'registration/profile.html', {'user': user})
 
-def sign_up(request):
-    if request.method == 'POST':
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('/home')
-    else:
-        form = RegisterForm()
-        
-    return render(request, 'registration/sign_up.html', {'form': form})
-
-@login_required(login_url='/login')
 def logout_view(request):
     logout(request)
-    return redirect('/login')
+    return redirect("login")
 
-@login_required(login_url='/login')
-def profile(request):
-    return render(request, 'registration/profile.html', {})
+class UserRegisterView(generic.CreateView):
+    form_class = SignUpForm
+    template_name = 'registration/register.html'
+    success_url = reverse_lazy('login')
 
 class UserEditView(generic.UpdateView):
     form_class = EditProfileForm
@@ -45,9 +28,29 @@ class UserEditView(generic.UpdateView):
     def get_object(self):
         return self.request.user
     
-class RegisterView(generic.CreateView):
-    form_class = UserCreationForm
-    template_name = 'registration/register.html'
+class ShowProfilePageView(DetailView):
+    model = Profile
+    template_name = 'registration/user_profile.html'
+
+    def get_context_data(self, *args, **kwargs):
+        #users = Profile.objects.all()
+        context = super(ShowProfilePageView, self).get_context_data(*args, **kwargs)
+        page_user = get_object_or_404(Profile, id=self.kwargs['pk'])
+        context["page_user"] = page_user
+        return context
+    
+class EditProfilePageView(generic.UpdateView):
+    model = Profile
+    template_name = 'registration/edit_profile_page.html'
+    fields = ['first_name', 'last_name', 'bio', 'profile_pic', 'pinterest_url', 'venmo_url']
     success_url = reverse_lazy('home')
 
+class CreateProfilePageView(CreateView):
+    model = Profile
+    form_class = ProfilePageForm
+    template_name = 'registration/create_user_profile_page.html'
+    success_url = reverse_lazy('home')
     
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
