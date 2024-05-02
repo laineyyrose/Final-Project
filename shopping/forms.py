@@ -26,6 +26,14 @@ class EditItem(forms.ModelForm):
     class Meta:
         model = Item
         fields = ['image', 'name', 'price', 'description'] #same stuff, just lets you edit it
+        widgets = {'image': forms.ClearableFileInput(attrs={'class': 'form-control',}), 
+                   'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'What your item is (Max 50 characters.)', 'maxlength' : '50',}), 
+                   'price': forms.NumberInput(attrs={'class': 'itemPrice form-control', 'placeholder': 'Price of item'}), 
+                   'description': forms.Textarea(attrs={'class': 'form-control', 
+                                                        'placeholder': 'Describe your item here... (Max 250 characters.)', 
+                                                        'maxlength' : '250', 
+                                                        'style': 'height: 100px',
+                                                        }), }
 
 class AddComment(forms.ModelForm):
     """
@@ -37,3 +45,4 @@ class AddComment(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['comment'] #just the comment & whether if it's a reply, the user and item are auto-filled
+        

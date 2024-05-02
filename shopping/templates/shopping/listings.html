@@ -15,11 +15,6 @@
     margin: 0.5% 0.5%;
     z-index: 3; /* the z index might get a little crazy but it keeps it from conflicting with stretched links */
   }
-  /*
-  .floating-container:hover {
-    height: 300px;
-  }
-  */
 
   .btn-circle.btn-xl {
     width: 70px;
@@ -46,7 +41,7 @@
   object-fit: cover;
 }
 
-.itemPrice { /* FIX */
+.itemPrice { /* this was an accident but i actually like how it looks */
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='calc(1.5em + .75rem + 2px)' width='100%'><text x='2' y='13' fill='gray' font-size='12' font-family='arial'>$</text></svg>");
   padding-left: 12px;
   background-repeat: no-repeat;
@@ -132,18 +127,23 @@
   </div>
 
 
-<div class="container-fluid mt-3">
+<div class="container-fluid m-2">
+  <h1> Shop </h1> <!--This is ugly so ask for opinion on this later-->
   <!-- PRICE FILTER -->
-  <p> Filter by price: </p> 
+  <p style="margin-bottom: 5px;"> Filter by price: </p> 
   <form action="{% url 'listings' %}" method="GET">
     <span> $ </span>
-    <input type="number" style="max-width: 10%;" name="min_price" placeholder="Min price" min="0" value="{{ request.GET.min_price }}">
+    <input type="number" style="max-width: 10%; height: 32px;" name="min_price" placeholder="Min price" min="0" value="{{ request.GET.min_price }}">
     <span> - $</span>
-    <input type="number" style="max-width: 10%;" name="max_price" placeholder="Max price" min="0" value="{{ request.GET.max_price }}">
+    <input type="number" style="max-width: 10%; height: 32px;" name="max_price" placeholder="Max price" min="0" value="{{ request.GET.max_price }}">
     <button type="submit" class="btn btn-primary">Filter</button>
     <a class="btn btn-secondary" href="{% url 'listings'%}">Clear</a>
   </form> 
+  
   <!-- ITEMS -->
+{% if item_display|length == 0 %}
+  <p class="text-center mt-4"> No items yet. Why not post something you've been meaning to sell? </p>
+{% else %}
   <div class="itemcards container-fluid mt-4">
     <div class="row row-cols-5 row-cols-md-5 row-cols-sm-3 g-4"> <!-- Use row-cols-{x} to specify the number of columns per row -->
       {% for item in item_display %}
@@ -153,7 +153,11 @@
               <img src="{{ item.image.url }}" class="img-thumbnail rounded-0 w-80" alt="Image of {{item.name}}">
               <h5 class="card-title mt-1">
                 <a class="stretched-link" href="{% url 'item' item.id %}"> {{ item.name|truncatechars:20 }} </a>
-                <span class="" style="float:right;">$ {{ item.price|localize }}</span>
+                {% if item.price > 9999 %}
+                <span class="" style="float:right; font-size: smaller;"> ${{ item.price|localize }}</span>
+                {% else %}
+                <span class="" style="float:right;"> ${{ item.price|localize }}</span>
+                {% endif %}
               </h5>
               <p class="card-text"> @{{ item.user }} </p> <!-- fix when adding lainey's stuff -->
             </div>
@@ -163,9 +167,7 @@
     </div>
   </div>  
 </div>
-
-
-
+{% endif %}
 
 
  

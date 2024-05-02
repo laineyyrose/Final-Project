@@ -36,8 +36,8 @@ def listings(request):
             # Filter by maximum price if provided
             if max_price is not None:
                 item_display = item_display.filter(price__lte=max_price)
-        except Item.objects.all() == None:
-            item_display = {"No postings right now. Why not add something of your own?"}
+        except Item.objects.all().exists() == False:
+            item_display = {}
 
     context = {
         'item_display' : item_display
@@ -90,14 +90,16 @@ def delete_item(request, pk):
     
 @login_required
 def edit_item(request, pk):
-    """_summary_
+    """
+    Author: Andy
+    Edits an item in the Item database.
 
     Args:
-        request (_type_): _description_
-        pk (_type_): _description_
+        request (HttpRequest): The request object used to generate this view. This one includes the POST request from the edit form.
+        pk: The primary key of the item to be edited.
 
     Returns:
-        _type_: _description_
+        redirect: Redirects the user back to the item page after editing the item.
     """
     item = get_object_or_404(Item, pk=pk)
     if request.user != item.user:
@@ -109,7 +111,7 @@ def edit_item(request, pk):
             return redirect('item', pk=pk)
     else:
         form = EditItem(instance=item)
-    return render(request, 'shopping/edit_item.html', {'form': form})
+    return redirect('item', pk=pk)
 
 @login_required
 def item(request, pk):
@@ -119,17 +121,22 @@ def item(request, pk):
 
     Args:
         request (HttpRequest): The request object used to generate this view.
-        pk (int): The primary key of the item to be displayed.
+        pk: The primary key of the item to be displayed.
 
     Returns:
         render: A render object that displays the itemview.html template with the item specified by the primary key.
     """
-    item = Item.objects.get(pk=pk)
-    comments = Comment.objects.filter(item=item).order_by('-date_posted')
+    item = get_object_or_404(Item, pk=pk)
+    try:
+        comments = Comment.objects.filter(item=item).order_by('-date_posted')
+    except Comment.objects.filter(item=item).exists() == False:
+        comments = {None}
+    editform = EditItem(instance=item)
 
     context = {
         'item' : item,
         'comments' : comments,
+        'editform' : editform, #for modal consistency sake
     }
     return render(request, 'shopping/item.html', context)
 
@@ -155,3 +162,20 @@ def add_comment(request, pk):
         new_comment.save()
         return redirect('item', pk=pk)
     return redirect('item', pk=pk)
+
+@login_required
+def delete_comment(request, pk):
+    """_summary_
+
+    Args:
+        request (_type_): _description_
+        pk (_type_): _description_
+    """
+    comment = get_object_or_404(Comment, pk=pk)
+    if request.user != comment.user:
+        return HttpResponseForbidden()
+    if request.method == 'POST':
+        comment.delete_text()
+        return redirect('item', pk=comment.item.pk)
+    else:
+        return HttpResponseForbidden()
