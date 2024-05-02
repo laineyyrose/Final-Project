@@ -70,6 +70,14 @@
             return;
         }
 
+        // Check file name length
+        const fileName = file.name;
+        if (fileName.length > 50) {
+            alert("File name cannot exceed 50 characters.");
+            input.value = ''; // Clear the file input
+            return;
+        }
+
         // Check file size
         const maxSizeBytes = maxSizeMB * 1024 * 1024; // Convert MB to bytes
         if (file.size > maxSizeBytes) {
@@ -106,11 +114,11 @@
               </div>              
               <div class="form-group">
                   <label for="itemName">Item Name:</label>
-                  <input type="text" placeholder="What your item is (Max 50 characters.)" aria-placeholder="What your item is (Max 50 characters.)" class="form-control" id="itemName" name="name" required>
+                  <input type="text" placeholder="What your item is (Max 50 characters.)" maxlength="50" aria-placeholder="What your item is (Max 50 characters.)" class="form-control" id="itemName" name="name" required>
               </div>
               <div class="form-group">
                   <label for="itemPrice">Price:</label>
-                  <input type="number" class="itemPrice form-control" id="itemPrice" name="price" step=".01" min="0" maxlength="10" required>
+                  <input type="number" class="itemPrice form-control" id="itemPrice" name="price" step=".01" min="0" max="9999999" maxlength="10" required>
               </div>
               <div class="form-group">
                   <label for="itemDescription">Description:</label>
@@ -136,8 +144,8 @@
     <input type="number" style="max-width: 10%; height: 32px;" name="min_price" placeholder="Min price" min="0" step="any" value="{{ request.GET.min_price }}">
     <span> - $</span>
     <input type="number" style="max-width: 10%; height: 32px;" name="max_price" placeholder="Max price" min="0" step="any" value="{{ request.GET.max_price }}">
-    <button type="submit" class="btn btn-primary">Filter</button>
-    <a class="btn btn-secondary" href="{% url 'listings'%}">Clear</a>
+    <button type="submit" aria-label="Filter" title="Filter by price" class="btn btn-primary p-1">Filter</button>
+    <a class="btn btn-secondary p-1" title="Clear filter" aria-label="Clear" href="{% url 'listings'%}">Clear</a>
   </form> 
   
   <!-- ITEMS -->
@@ -149,10 +157,10 @@
       {% for item in item_display %}
         <div class="col"> <!-- Each card occupies one column -->
           <div class="card h-100 rounded-0" style="max-width: 18rem;"> <!-- Set height to 100% to ensure all cards have the same height -->
-            <div class="card-body">
+            <div class="card-body" title="View {{ item.name }}">
               <img src="{{ item.image.url }}" class="img-thumbnail rounded-0 w-80" alt="Image of {{item.name}}">
               <h5 class="card-title mt-1">
-                <a class="stretched-link" href="{% url 'item' item.id %}"> {{ item.name|truncatechars:20 }} </a>
+                <a class="stretched-link" href="{% url 'item' item.id %}" style="text-decoration: none;"> {{ item.name|truncatechars:20 }} </a>
                 {% if item.price > 9999 %}
                 <span class="" style="float:right; font-size: smaller;"> ${{ item.price|localize }}</span>
                 {% else %}

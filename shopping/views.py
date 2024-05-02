@@ -30,11 +30,11 @@ def listings(request):
         item_display = Item.objects.all()
 
         # Filter by minimum price if provided
-        if min_price is not '':
+        if min_price != '':
             item_display = item_display.filter(price__gte=min_price)
 
         # Filter by maximum price if provided
-        if max_price is not '':
+        if max_price != '':
             item_display = item_display.filter(price__lte=max_price)
 
         if Item.objects.all().exists() == False:

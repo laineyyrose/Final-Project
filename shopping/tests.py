@@ -1,13 +1,14 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from django.test import SimpleTestCase
 from django.urls import reverse
-from models import Item, Comment
+from .models import Item, Comment
 from django.utils import timezone
 from django.contrib.auth.models import User
 from .forms import AddItem, EditItem, AddComment
 
-
 # Create your tests here.
+
+#TODO - GO BACK AND MAKE SURE THESE TESTS R ACCURTE LOL
 
 class ItemModelTest(TestCase):
     @classmethod
@@ -42,6 +43,33 @@ class ItemModelTest(TestCase):
         item = Item.objects.get(id=1)
         url = item.get_absolute_url()
         self.assertEqual(url, '/item/1')
+
+class CommentModelTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        # Create a user
+        user = User.objects.create_user(username='testuser', password='testpassword')
+        
+        # Create an item
+        item = Item.objects.create(name='Test Item', price=10.99)
+        
+        # Create a comment
+        Comment.objects.create(comment='Test comment', user=user, item=item, date_posted=timezone.now())
+    
+    def test_comment_str_representation(self):
+        comment = Comment.objects.get(id=1)
+        expected_str = f"{comment.user} on {comment.item} at {comment.date_posted}"
+        self.assertEqual(str(comment), expected_str)
+    
+    def test_comment_delete_text(self):
+        comment = Comment.objects.get(id=1)
+        comment.delete_text()
+        self.assertEqual(comment.comment, "This comment has been deleted.")
+    
+    def test_comment_absolute_url(self):
+        comment = Comment.objects.get(id=1)
+        expected_url = f"/comment/{comment.pk}/"
+        self.assertEqual(comment.get_absolute_url(), expected_url)
 
 
 # VIEWS TESTS
@@ -90,3 +118,28 @@ class ListingsTestCase(TestCase):
         response = self.client.get(reverse('listings'))
         self.assertEqual(response.status_code, 302)  # Redirect to login page
         self.assertRedirects(response, '/accounts/login/?next=/listings/')
+
+class ItemViewTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        # Create a user
+        user = User.objects.create_user(username='testuser', password='testpassword')
+        
+        # Create an item
+        item = Item.objects.create(name='Test Item', price=10.99)
+        
+        # Create comments
+        Comment.objects.create(comment='Test comment 1', user=user, item=item, date_posted=timezone.now())
+        Comment.objects.create(comment='Test comment 2', user=user, item=item, date_posted=timezone.now())
+    
+    def test_item_view(self):
+        client = Client()
+        item = Item.objects.get(id=1)
+        url = reverse('item', args=[item.pk])
+        response = client.get(url)
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'shopping/item.html')
+        self.assertEqual(response.context['item'], item)
+        self.assertEqual(len(response.context['comments']), 2)
+        self.assertEqual(response.context['editform'].instance, item)
