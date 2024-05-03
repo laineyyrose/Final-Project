@@ -1,6 +1,48 @@
+<!-- Help from GPT with styling -->
+
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Thrift Map</h1>
-    <iframe src="https://www.google.com/maps/d/u/1/embed?mid=1le73W5BUGoep0E785InwXJPVI-eVb9A&ehbc=2E312F" width="640" height="480"></iframe>
+<style>
+    .card {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);  /* Adds subtle shadow to cards */
+    margin-bottom: 30px; /* Adds space below each card */
+    }
+</style>
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Thrift Map</h1>
+    <div class="iframe-container">
+        <iframe src="https://www.google.com/maps/d/u/1/embed?mid=1le73W5BUGoep0E785InwXJPVI-eVb9A&ehbc=2E312F" width="100%" height="480" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+
+    <!-- Example cards for locations -->
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><strong>Goodwill</strong></h5>
+                    <p class="card-text">This thrift store is walking distance to .</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><strong>Location Name</strong></h5>
+                    <p class="card-text">Brief description about the location.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><strong>Location Name</strong></h5>
+                    <p class="card-text">Brief description about the location.</p>
+                </div>
+            </div>
+        </div>
+        <br/><br/>
+    </div>
+</div>
 {% endblock %}
