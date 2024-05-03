@@ -1,17 +1,58 @@
 {% extends 'base.html' %}
 {% block title %} Create Profile {% endblock %}
 
+{% load static %}
+
 {% block content %}
 
-{% if user.is_authenticated %}  
-    <h1>Create Profile</h1>
-
-    <br/><br/>     
-    <div class="form-group">
-    <form method="POST" enctype = 'multipart/form-data'>
+<div class="container mt-5">
+    <h2 class="mb-4">Create Profile</h2>
+    <form method="POST" action="{% url 'create_profile_page' %}" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button class="btn btn-primary">Create Profile</button>
-    </div>
-{% endif %}
+        <!-- Profile Picture Upload -->
+        <div class="form-group text-center">
+            <label for="profilePictureUpload">
+                {% if user.profile.profile_pic %}
+                <!-- Handle actual profile picture stuff here -->
+                <!-- routes either to users profile picture or the default -->
+                    <img src="{{ user.profile.profile_pic.url }}" class="img-fluid rounded-circle shadow mb-3" alt="if you see this sorry" style="cursor: pointer; width: 150px; height: 150px;">
+                {% else %}
+                    <img src="{% static 'images/default_user.jpg' %}" class="img-fluid rounded-circle shadow mb-3" alt="Default Profile Picture" style="cursor: pointer; width: 150px; height: 150px;">
+                {% endif %}
+            </label>
+            <input type="file" name="profile_pic" id="profilePictureUpload" class="d-none" onchange="this.form.submit();">
+        </div>
+        <!-- Editable Fields -->
+        <div class="form-group">
+            <label for="id_first_name">First name:</label>
+            <input type="text" class="form-control" name="first_name" id="id_first_name" value="{{ user.first_name }}" style="border-radius: 20px; overflow: hidden;">
+        </div>
+        <div class="form-group">
+            <label for="id_last_name">Last name:</label>
+            <input type="text" class="form-control" name="last_name" id="id_last_name" value="{{ user.last_name }}" style="border-radius: 20px; overflow: hidden;">
+        </div>
+        <div class="form-group">
+            <label for="id_email">Email:</label>
+            <input type="email" class="form-control" name="email" id="id_email" value="{{ user.email }}" style="border-radius: 20px; overflow: hidden;">
+        </div>
+        
+        <!-- Additional user information forms -->
+        <div class="form-group">
+            <label for="id_venmo">Venmo:</label>
+            <input type="text" class="form-control" name="venmo_url" id="id_venmo" value="{{ user.profile.venmo_url }}" style="border-radius: 20px; overflow: hidden;">
+        </div>
+        <div class="form-group">
+            <label for="id_pinterest">Pinterest:</label>
+            <input type="text" class="form-control" name="pinterest_url" id="id_pinterest" value="{{ user.profile.pinterest_url }}" style="border-radius: 20px; overflow: hidden;">
+        </div>
+        <a href="{% url 'create_profile_page' %}" class="btn btn-primary rounded-pill shadow mt-3 ">Back</a>
+        <button type="submit" class="btn btn-primary rounded-pill shadow mt-3">Save Changes</button>
+    </form>
+</div>
 {% endblock %}
+
+
+
+
+
+

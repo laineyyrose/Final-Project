@@ -34,9 +34,7 @@
     background-color: var(--bs-warning);
     border-color: var(--bs-warning);
   }
-  body {
-    background-color: #c4a1c8; /* Replace with your desired color */
-  }
+
   /* Override Navbar colors */
   .navbar {
     background-color: var(--bs-primary);
@@ -59,7 +57,3 @@
     color: #cccccc !important; /* Light grey color for hover/focus */
 }
 
-/* Change the color of the active navbar link for smaller screens / mobile */
-.navbar-light .navbar-toggler-icon {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffffff' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(255, 255, 255, 0.5)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-}

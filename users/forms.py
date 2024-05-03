@@ -45,4 +45,4 @@ class ProfilePageForm(forms.ModelForm):
             'venmo_url': forms.TextInput(attrs={'class': 'form-control'}),
             'pinterest_url': forms.TextInput(attrs={'class': 'form-control'}),
         }
-    
+

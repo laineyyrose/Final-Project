@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.shortcuts import render
-
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 import openmeteo_requests #OPENMETEO API IMPORTS (all the way down to random) - DO NOT TOUCH!
@@ -10,8 +9,16 @@ from retry_requests import retry
 import random
 
 # Create your views here.
+
+@login_required
 def thrift_map(request):
-    return render(request, 'thrift_map.html', {})
+    return render(request, 'fashion/thrift_map.html', {})
+
+
+@login_required
+def color_picker(request):
+    return render(request, 'fashion/color_picker.html', {})
+
 
 @login_required
 def weather(request):
