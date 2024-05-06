@@ -30,6 +30,7 @@
       display: flex;
       align-items: center; /* Centers items vertically */
       }
+      
     </style>
 
   </head>
@@ -39,32 +40,32 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-primary">
       <div class="container-fluid justify-content-start">
         <!-- Home -->
-        <a class="navbar-brand" href="{% url 'home_page' %}"><img src="{% static 'images/navbar/file.png' %}" alt="Logo" width="30" height="24" class="navbar-img"></a>
+        <a class="navbar-brand" href="{% url 'home_page' %}" title="Home"><img src="{% static 'images/navbar/file.png' %}" alt="Logo" width="30" height="24" class="navbar-img"></a>
         <!-- Left justified items-->
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
               <!-- Listings -->
               <a class="navbar-brand" href="{% url 'listings' %}">
-                <img src="{% static 'images/navbar/hanger.png' %}" alt="Logo" class="navbar-img">
+                <img src="{% static 'images/navbar/hanger.png' %}" alt="Listings" title="Listings" class="navbar-img">
               </a>
             </li>
             <li class="nav-item">
               <!-- Color Picker -->
               <a class="navbar-brand" href="#">
-                <img src="{% static 'images/navbar/paint.png' %}" alt="Logo" class="navbar-img">
+                <img src="{% static 'images/navbar/paint.png' %}" alt="Color Picker" title="Color Picker" class="navbar-img">
               </a>
             </li>
             <li class="nav-item">
               <!-- Weather -->
               <a class="navbar-brand" href="{% url 'weather' %}">
-                <img src="{% static 'images/navbar/weather.png' %}" alt="Logo" class="navbar-img-weather">
+                <img src="{% static 'images/navbar/weather.png' %}" alt="Weather" title="Weather" class="navbar-img-weather">
               </a>
             </li>
             <li class="nav-item">
               <!-- Map -->
               <a class="navbar-brand" href="{% url 'thrift_map' %}">
-                <img src="{% static 'images/navbar/globe.png' %}" alt="Logo" class="navbar-img-globe">
+                <img src="{% static 'images/navbar/globe.png' %}" alt="Thrift Map" title="Thrift Map" class="navbar-img-globe">
               </a>
             </li>
           </ul>

@@ -99,10 +99,10 @@
                         <!-- Put the pets and like and stuff here pls pls pls remember and read seamus -->
                         <!-- Displaying the user's details -->
                         {% if ser.user.profile.venmo_url %}
-                            <a href="https://account.venmo.com/u/{{ ser.user.profile.venmo_url }}" target="_blank"><img src="{% static 'images/venmo.png' %}" alt="Venmo" class="icon-image"></a>
+                            <a href="https://account.venmo.com/u/{{ ser.user.profile.venmo_url }}" title="{{ ser.user.profile.venmo_url }}" target="_blank"><img src="{% static 'images/venmo.png' %}" alt="Venmo" class="icon-image"></a>
                         {% endif %}
                         {% if user.profile.pinterest_url %}
-                            <a href="https://www.pinterest.com/{{ ser.user.profile.pinterest_url }}/" target="_blank"><img src="{% static 'images/pinterest.png' %}" alt="Pinterest" class="icon-image"></a>
+                            <a href="https://www.pinterest.com/{{ ser.user.profile.pinterest_url }}/" title="{{ ser.user.profile.pinterest_url }}" target="_blank"><img src="{% static 'images/pinterest.png' %}" alt="Pinterest" class="icon-image"></a>
                         {% endif %}
                     </div>
                     <p><strong>Name:</strong> {{ ser.user.profile.first_name|default_if_none:"" }} {{ user.profile.last_name|default_if_none:"" }}</p>
@@ -131,7 +131,7 @@
                     <span class="" style="float:right;"> ${{ item.price|localize }}</span>
                     {% endif %}
                   </h5>
-                  <p class="card-text"> @{{ item.user }} </p> <!-- fix when adding lainey's stuff -->
+                  <p class="card-text"> @{{ item.user }} </p>
                 </div>
               </div>
             </div>
