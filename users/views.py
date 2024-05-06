@@ -9,6 +9,7 @@ from .forms import SignUpForm, EditProfileForm, ProfilePageForm
 from django.views.generic import DetailView, CreateView
 from shopping.models import Profile
 from django.shortcuts import get_object_or_404
+from shopping.models import Item
 
 
 def logout_view(request):
@@ -36,7 +37,9 @@ class ShowProfilePageView(DetailView):
         #users = Profile.objects.all()
         context = super(ShowProfilePageView, self).get_context_data(*args, **kwargs)
         user = get_object_or_404(Profile, id=self.kwargs['pk'])
+        user_items = Item.objects.all().filter(user=user.pk).order_by('-date_posted') #shows user's specific items
         context["ser"] = user
+        context['items'] = user_items
         return context
     
 class EditProfilePageView(generic.UpdateView):

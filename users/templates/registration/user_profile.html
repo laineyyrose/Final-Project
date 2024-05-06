@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {%load static%}
+{% load l10n %}
 
+{% block title %}{{ user.username }} - Profile{% endblock %}
 
 {% block content %}
 
@@ -51,6 +53,21 @@
     gap: 10px;               /* Adds space between the items */
     }
 
+    .itemcard {
+    transition: transform 0.3s ease;
+    }
+
+    .itemcard:hover { /* hover is by gpt */
+    transform: translateY(-5px); /* Adjust the distance you want the card to move */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .itemthumbnail {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    }
+
 </style>
 
 <div class="container mt-4"></div>
@@ -61,8 +78,8 @@
             <!-- No longer looks clickable :)-->
                 <div class="image-container">
                     <img src="{% static 'images/frame.png' %}" alt="Background Image" class="background-image">
-                    {% if user.profile.profile_pic %}
-                        <img src="{{ user.profile.profile_pic.url }}" class="profile-image" alt="Profile Picture">
+                    {% if ser.user.profile.profile_pic %}
+                        <img src="{{ ser.user.profile.profile_pic.url }}" class="profile-image" alt="Profile Picture">
                     {% else %}
                         <img src="{% static 'images/default_user.jpg' %}" class="profile-image" alt="Default Profile Picture">
                     {% endif %}
@@ -78,23 +95,48 @@
                 <div class="card-body">
                     <div class="flex-container">
                         <!-- Card body for padding and spacing -->
-                        <h4><strong>{{ user.username|slice:":15" }}</strong></h4>
+                        <h4><strong>{{ ser.user.username|slice:":15" }}</strong></h4>
                         <!-- Put the pets and like and stuff here pls pls pls remember and read seamus -->
                         <!-- Displaying the user's details -->
-                        {% if user.profile.venmo_url %}
-                            <a href="{{ user.profile.venmo_url }}" target="_blank"><img src="{% static 'images/venmo.png' %}" alt="Venmo" class="icon-image"></a>
+                        {% if ser.user.profile.venmo_url %}
+                            <a href="https://account.venmo.com/u/{{ ser.user.profile.venmo_url }}" target="_blank"><img src="{% static 'images/venmo.png' %}" alt="Venmo" class="icon-image"></a>
                         {% endif %}
                         {% if user.profile.pinterest_url %}
-                            <a href="{{ user.profile.pinterest_url }}" target="_blank"><img src="{% static 'images/pinterest.png' %}" alt="Pinterest" class="icon-image"></a>
+                            <a href="https://www.pinterest.com/{{ ser.user.profile.pinterest_url }}/" target="_blank"><img src="{% static 'images/pinterest.png' %}" alt="Pinterest" class="icon-image"></a>
                         {% endif %}
                     </div>
-                    <p><strong>Name:</strong> {{ user.profile.first_name|default_if_none:"" }} {{ user.profile.last_name|default_if_none:"" }}</p>
-                    <p><strong>Email:</strong> {{ user.email|default:"" }}</p>
+                    <p><strong>Name:</strong> {{ ser.user.profile.first_name|default_if_none:"" }} {{ user.profile.last_name|default_if_none:"" }}</p>
+                    <p><strong>Email:</strong> {{ ser.user.email|default:"" }}</p>
                     <p>{{ user.profile.bio }}</p>
                     <a href="{% url 'edit_profile_page' profile.id %}" class="btn btn-primary rounded-pill shadow">Edit Profile</a>
                 </div>
             </div>
         </div>
     </div>
+    
+    <!-- USER'S SPECIFIC ITEMS -->
+    <div class="itemcards container-fluid mt-4 mb-4">
+        <h2 class="mb-3"> {{ser.user.username}}'s items </h2>
+        <div class="row row-cols-5 row-cols-md-5 row-cols-sm-3 g-4"> <!-- Use row-cols-{x} to specify the number of columns per row -->
+          {% for item in items %}
+            <div class="col"> <!-- Each card occupies one column -->
+              <div class="itemcard card h-100 rounded-0" style="max-width: 18rem;"> <!-- Set height to 100% to ensure all cards have the same height -->
+                <div class="card-body" title="View {{ item.name }}">
+                  <img src="{{ item.image.url }}" class="itemthumbnail img-thumbnail rounded-0 w-80" alt="Image of {{item.name}}">
+                  <h5 class="card-title mt-1">
+                    <a class="stretched-link" href="{% url 'item' item.id %}" style="text-decoration: none;"> {{ item.name|truncatechars:20 }} </a>
+                    {% if item.price > 9999 %}
+                    <span class="" style="float:right; font-size: smaller;"> ${{ item.price|localize }}</span>
+                    {% else %}
+                    <span class="" style="float:right;"> ${{ item.price|localize }}</span>
+                    {% endif %}
+                  </h5>
+                  <p class="card-text"> @{{ item.user }} </p> <!-- fix when adding lainey's stuff -->
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>  
 
 {% endblock %}
