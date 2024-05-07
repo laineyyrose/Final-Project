@@ -7,6 +7,7 @@ import requests_cache
 import pandas as pd
 from retry_requests import retry
 import random
+from django.core.cache import cache
 
 # Create your views here.
 
@@ -16,8 +17,8 @@ def thrift_map(request):
 
 
 @login_required
-def color_picker(request):
-    return render(request, 'fashion/color_picker.html', {})
+#def color_picker(request):
+    #return render(request, 'fashion/color_picker.html', {})
 
 
 @login_required
@@ -119,3 +120,29 @@ def weather(request):
     }
 
     return render(request, 'fashion/weather.html', context)
+
+
+colors = [
+    {'name': 'RED', 'image_path': 'images/colors/red.jpg', 'description': 'Crimson Charge'},
+    {'name': 'BLUE', 'image_path': 'images/colors/blue.jpg', 'description': 'Azure Depths'},
+    {'name': 'GREEN', 'image_path': 'images/colors/green.jpg', 'description': 'Emerald Meadow'},
+    {'name': 'PINK', 'image_path': 'images/colors/pink.jpg', 'description': 'Blush Blossom'},
+    {'name': 'PURPLE', 'image_path': 'images/colors/purple.jpg', 'description': 'Royal Lavender'},
+    {'name': 'SILVER', 'image_path': 'images/colors/silver.jpg', 'description': 'Sterling Gleam'},
+    {'name': 'ORANGE', 'image_path': 'images/colors/orange.jpg', 'description': 'Tangerine Zest'},
+    {'name': 'YELLOW', 'image_path': 'images/colors/yellow.jpg', 'description': 'Sunbeam Yellow'},
+    {'name': 'BLACK', 'image_path': 'images/colors/black.jpg', 'description': 'Midnight Black'},
+    {'name': 'WHITE', 'image_path': 'images/colors/white.jpg', 'description': 'Polar White'},
+    {'name': 'TURQUOISE', 'image_path': 'images/colors/turquoise.jpg', 'description': 'Lagoon Wave'},
+    {'name': 'NAVY', 'image_path': 'images/colors/navy.jpg', 'description': 'Deep Navy'}
+
+
+]
+
+def color_picker(request):
+    color = cache.get('daily_color')
+    if not color:
+        color = random.choice(colors)
+        cache.set('daily_color', color, timeout=86400)  # Cache for 24 hours
+    today_date = timezone.now().strftime('%d-%m-%Y') 
+    return render(request, 'fashion/color_picker.html', {'color': color, 'today_date': today_date})

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .pantone-card {
+    width: 500px;
+    height: 600px;
+    border: 3px solid #020202;
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+    }
+
+    .color-display {
+    height: 70%;
+    background-color: #fff; /* Default background in case image fails to load */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+
+    .color-image {
+    width: 400px; /* Ensure image fits within the color display area */
+    height: 375px; /* Limit height to fit within the area */
+    display: block;
+    }
+
+    .color-info {
+    padding: 5px 45px; /* Reduce top padding */
+    text-align: left;  /* align text to the left */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;  /* align content to the top */
+    height: auto;  /* Adjust based on your total card height */
+    }
+
+    .color-name {
+    font-size: 50px;
+    font-weight: bold;
+    }
+
+    .color-date {
+    font-size: 25px;
+    font-weight: bold;
+    padding: 0px;
+    }
+
+    .color-description {
+    font-size: 25px;
+    font-weight: bold;
+    }
+</style>
+<div class="pantone-card">
+    <div class="color-display">
+        <img src="{% static color.image_path %}" alt="Color Image" class="color-image">
+    </div>
+    <div class="color-info">
+        <h1 class="color-name">{{ color.name }}</h1>
+        <p class="color-date">{{ today_date }}</p> 
+        <p class="color-description">{{ color.description }}</p>
+    </div>
+</div>
+{% endblock %}

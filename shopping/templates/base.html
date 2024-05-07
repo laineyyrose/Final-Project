@@ -26,9 +26,42 @@
         width: 50px; 
         height: auto;
       }
+      .navbar-img-paint {
+        width: 60px; 
+        height: auto;
+      }
       .navbar-nav {
       display: flex;
       align-items: center; /* Centers items vertically */
+      }
+      /* gpt helped with this one */
+      .nav-item {
+      display: flex; /* Ensures the items align correctly and take full height */
+      align-items: center; /* Centers items vertically */
+      justify-content: center; /* Centers items horizontally */
+      width: 120px; /* Set a standard width for each nav item */
+      height: 80px; /* Set a standard height for each nav item */
+      }
+
+      .navbar-link {
+      display: flex; /* Use flex to center the image/link inside the nav-item */
+      align-items: center; /* Center vertically */
+      justify-content: center; /* Center horizontally */
+      width: 100%; /* Fill the nav-item container */
+      height: 100%; /* Fill the nav-item container */
+      text-decoration: none; /* Optional: removes underline from links */
+      }
+
+      .navbar-img {
+      max-width: 70%; /* Limit the size of the image to ensure it fits well */
+      max-height: 70%; /* This can be adjusted based on your specific design needs */
+      margin: auto; /* Additional centering for the image */
+      }
+
+      .navbar-link.current-page, .navbar-link.current-page .navbar-img {
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Example shadow for active item */
+      background-color: rgba(255, 255, 255, 0.2); /* Light background for visibility */
+      border-radius: 5px; /* Rounded corners */
       }
     </style>
 
@@ -45,25 +78,25 @@
           <ul class="navbar-nav">
             <li class="nav-item">
               <!-- Listings -->
-              <a class="navbar-brand" href="{% url 'listings' %}">
+              <a class="navbar-link {% if request.resolver_match.url_name == 'listings' %}current-page{% endif %}" href="{% url 'listings' %}">
                 <img src="{% static 'images/navbar/hanger.png' %}" alt="Logo" class="navbar-img">
               </a>
             </li>
             <li class="nav-item">
               <!-- Color Picker -->
-              <a class="navbar-brand" href="#">
-                <img src="{% static 'images/navbar/paint.png' %}" alt="Logo" class="navbar-img">
+              <a class="navbar-link {% if request.resolver_match.url_name == 'color_picker' %}current-page{% endif %}" href="{% url 'color_picker' %}">
+                <img src="{% static 'images/navbar/paint.png' %}" alt="Logo" class="navbar-img-paint">
               </a>
             </li>
             <li class="nav-item">
               <!-- Weather -->
-              <a class="navbar-brand" href="{% url 'weather' %}">
+              <a class="navbar-link {% if request.resolver_match.url_name == 'weather' %}current-page{% endif %}" href="{% url 'weather' %}">
                 <img src="{% static 'images/navbar/weather.png' %}" alt="Logo" class="navbar-img-weather">
               </a>
             </li>
             <li class="nav-item">
               <!-- Map -->
-              <a class="navbar-brand" href="{% url 'thrift_map' %}">
+              <a class="navbar-link {% if request.resolver_match.url_name == 'thrift_map' %}current-page{% endif %}" href="{% url 'thrift_map' %}">
                 <img src="{% static 'images/navbar/globe.png' %}" alt="Logo" class="navbar-img-globe">
               </a>
             </li>

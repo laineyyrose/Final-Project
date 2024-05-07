@@ -43,14 +43,18 @@ class EditProfilePageView(generic.UpdateView):
     model = Profile
     template_name = 'registration/edit_profile_page.html'
     fields = ['first_name', 'last_name', 'bio', 'profile_pic', 'pinterest_url', 'venmo_url']
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('home_page')
 
 class CreateProfilePageView(CreateView):
     model = Profile
     form_class = ProfilePageForm
     template_name = 'registration/create_user_profile_page.html'
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('home_page')
     
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+    
+def logout_and_redirect(request):
+    logout(request)
+    return redirect('login')  
