@@ -31,6 +31,10 @@
         width: 60px; 
         height: auto;
       }
+      .navbar-img-hanger {
+        width: 60px; 
+        height: auto;
+      }
       .navbar-nav {
         display: flex;
         align-items: center; /* Centers items vertically */
@@ -39,6 +43,12 @@
       /* Hover label effect */
       .navbar-link {
         position: relative;
+        display: flex; /* Use flex to center the image/link inside the nav-item */
+        align-items: center; /* Center vertically */
+        justify-content: center; /* Center horizontally */
+        width: 100%; /* Fill the nav-item container */
+        height: 100%; /* Fill the nav-item container */
+        text-decoration: none; /* Optional: removes underline from links */
       }
 
       .label {
@@ -56,7 +66,7 @@
         transition: opacity 0.3s ease, visibility 0s linear 0.3s;
       }
 
-      .navbar-brand:hover .label {
+      .navbar-link:hover .label {
         visibility: visible;
         opacity: 1;
         transition-delay: 0s;
@@ -69,15 +79,6 @@
       justify-content: center; /* Centers items horizontally */
       width: 120px; /* Set a standard width for each nav item */
       height: 80px; /* Set a standard height for each nav item */
-      }
-
-      .navbar-link {
-      display: flex; /* Use flex to center the image/link inside the nav-item */
-      align-items: center; /* Center vertically */
-      justify-content: center; /* Center horizontally */
-      width: 100%; /* Fill the nav-item container */
-      height: 100%; /* Fill the nav-item container */
-      text-decoration: none; /* Optional: removes underline from links */
       }
 
       .navbar-img {
@@ -108,7 +109,7 @@
             <li class="nav-item">
               <!-- Listings -->
               <a class="navbar-link {% if request.resolver_match.url_name == 'listings' %}current-page{% endif %}" href="{% url 'listings' %}">
-                <img src="{% static 'images/navbar/hanger.png' %}" alt="Logo" class="navbar-img">
+                <img src="{% static 'images/navbar/hanger.png' %}" alt="Logo" class="navbar-img-hanger">
                 <span class="label">Listings</span>
               </a>
             </li>
