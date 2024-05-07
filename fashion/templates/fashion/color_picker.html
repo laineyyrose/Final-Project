@@ -23,6 +23,7 @@
     width: 400px; /* Ensure image fits within the color display area */
     height: 375px; /* Limit height to fit within the area */
     display: block;
+    object-fit: cover;
     }
 
     .color-info {
@@ -37,12 +38,14 @@
     .color-name {
     font-size: 50px;
     font-weight: bold;
+    margin-bottom: 0px;
     }
 
     .color-date {
     font-size: 25px;
     font-weight: bold;
     padding: 0px;
+    margin-bottom: 0px;
     }
 
     .color-description {
@@ -50,6 +53,7 @@
     font-weight: bold;
     }
 </style>
+<h1 class="m-4 text-center">Color of the Day</h1>
 <div class="pantone-card">
     <div class="color-display">
         <img src="{% static color.image_path %}" alt="Color Image" class="color-image">
