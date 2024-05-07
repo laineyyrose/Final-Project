@@ -1,0 +1,88 @@
+<!-- Help from GPT with styling -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .card {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);  /* Adds subtle shadow to cards */
+    margin-bottom: 30px; /* Adds space below each card */
+    }
+</style>
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Thrift Map</h1>
+    <div class="iframe-container">
+        <iframe src="https://www.google.com/maps/d/u/1/embed?mid=1le73W5BUGoep0E785InwXJPVI-eVb9A&ehbc=2E312F" width="100%" height="480" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+
+    <!-- Example cards for locations -->
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><strong>Goodwill</strong></h5>
+                    <p class="card-text">This thrift store is within walking distance from campus. It is a go to thrifting spot for many Novos.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><strong>GDC Free Store</strong></h5>
+                    <p class="card-text">This thrift store is actually on campus ad everything is Free! Stop by the GDC and see if there are any items you wanna grab or leave behind for others.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><strong>Canned Ham VIntage</strong></h5>
+                    <p class="card-text">This is a great vintage spot with tons of unique pieces. It is a little pricier, but totally worth the extra dollar!.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><strong>SPARCC Treasure Chest</strong></h5>
+                    <p class="card-text">Designer clothing, jewelry, furniture, home accessories, antiques & collectibles, all at bargain prices!</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><strong>The Exchange Inc.</strong></h5>
+                    <p class="card-text">Consignment store for furniture, decor, clothing, bags & shoes, with proceeds benefitting the arts.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><strong>The Blue Heirloom Vintage</strong></h5>
+                    <p class="card-text">Vintage resale store with over 4K square feet of retro, vintage, mid-century and antique items and collectibles.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><strong>Mission Thrift Sarasota</strong></h5>
+                    <p class="card-text">Mission Thrift is a non profit thrift store with over 10,000 square feet of gently used clothes, furniture, sporting goods and more! Proceeds benefit children's ministries in our communities!</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><strong>Sunshine Thrift Stores of Bradenton, Inc.</strong></h5>
+                    <p class="card-text">Sunshine is a Florida based for-profit corporation formed in 1982 to assist local charitable organizations with their fundraising efforts. They have amazing thrifting options and is our favorite pick in Sarasota!</p>
+                </div>
+            </div>
+        </div>
+        <br/><br/>
+    </div>
+</div>
+{% endblock %}

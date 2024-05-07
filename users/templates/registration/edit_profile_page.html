@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %} Edit Profile {% endblock %}
+
+{% load static %}
+
+{% block content %}
+<script type="text/javascript"> //this is from tutorialspoint lol
+    function previewImage(event) {
+       var input = event.target;
+       var image = document.getElementById('icon');
+       if (input.files && input.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function(e) {
+             image.src = e.target.result;
+          }
+          reader.readAsDataURL(input.files[0]);
+       }
+    }
+ </script>
+
+<div class="container mt-5">
+    <h2 class="mb-4">Edit Profile</h2>
+    <form method="POST" action="{% url 'edit_profile_page' profile.id %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <!-- Profile Picture Upload -->
+        <div class="form-group text-center">
+            <label for="profilePictureUpload">
+                {% if user.profile.profile_pic %}
+                <!-- Handle actual profile picture stuff here -->
+                <!-- routes either to users profile picture or the default -->
+                    <img src="{{ user.profile.profile_pic.url }}" class="img-fluid rounded-circle shadow mb-3" id="icon" alt="if you see this sorry" style="cursor: pointer; width: 150px; height: 150px;" >
+                {% else %}
+                    <img src="{% static 'images/default_user.jpg' %}" id="icon" class="img-fluid rounded-circle shadow mb-3" alt="Default Profile Picture" style="cursor: pointer; width: 150px; height: 150px;">
+                {% endif %}
+            </label>
+            <input type="file" name="profile_pic" id="profilePictureUpload" class="d-none" onchange="previewImage(event)"> <!-- andy edited the image preview -->
+        </div>
+        <!-- Editable Fields -->
+        <div class="form-group">
+            <label for="id_first_name">First name:</label>
+            <input type="text" class="form-control" name="first_name" id="id_first_name" value="{{ user.profile.first_name }}" style="border-radius: 20px; overflow: hidden;">
+        </div>
+        <div class="form-group">
+            <label for="id_last_name">Last name:</label>
+            <input type="text" class="form-control" name="last_name" id="id_last_name" value="{{ user.profile.last_name }}" style="border-radius: 20px; overflow: hidden;">
+        </div>
+        <div class="form-group">
+            <label for="id_email">Email:</label>
+            <input type="email" class="form-control" name="email" id="id_email" value="{{ user.email }}" style="border-radius: 20px; overflow: hidden;">
+        </div>
+        
+        <!-- Additional user information forms -->
+        <div class="form-group">
+            <label for="id_venmo">Venmo Username:</label>
+            <input type="text" class="form-control" name="venmo_url" id="id_venmo" value="{{ user.profile.venmo_url }}" style="border-radius: 20px; overflow: hidden;">
+        </div>
+        <div class="form-group">
+            <label for="id_pinterest">Pinterest Username:</label>
+            <input type="text" class="form-control" name="pinterest_url" id="id_pinterest" value="{{ user.profile.pinterest_url }}" style="border-radius: 20px; overflow: hidden;">
+        </div>
+        <div class="form-group">
+            <label for="id_bio">Bio:</label>
+            <textarea class="form-control" name="bio" id="id_bio" style="border-radius: 20px; overflow: hidden;">{{ user.profile.bio }}</textarea>
+        </div>
+        <a href="{% url 'show_profile_page' profile.id %}" class="btn btn-primary rounded-pill shadow mt-3 ">Back</a>
+        <button type="submit" class="btn btn-primary rounded-pill shadow mt-3">Save Changes</button>
+    </form>
+</div>
+{% endblock %}
+
+

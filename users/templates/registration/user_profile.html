@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{%load static%}
+{% load l10n %}
+
+{% block title %}{{ pageuser.user.username }} - Profile{% endblock %}
+
+{% block content %}
+
+<style>
+    .image-container {
+    position: relative;
+    width: 300px; /* Adjust based on your needs */
+    height: 300px; /* Adjust based on your needs */
+    overflow: hidden;
+    text-align: center;
+    left: 14%;
+    }
+
+    .background-image, .profile-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%; /* Adjust if necessary */
+    height: 100%; /* Adjust if necessary */
+    object-fit: cover; /* Ensures the image covers the container */
+    display: inline-block;
+
+    }
+
+    .profile-image {
+    width: 255px; /* Adjust based on your needs */
+    height: 197px; /* Adjust based on your needs */
+    top: 44%;
+    left: 56%;
+    }
+
+    .center-column {
+    margin: 0 auto; /* Auto margins on both sides */
+    float: none; /* Avoids any floating behavior */
+    text-align: center;
+    }
+
+    .icon-image {
+    width: 30px; /* Adjust based on your needs */
+    height: 30px; /* Adjust based on your needs */
+    }
+
+    .flex-container {
+    display: flex;           /* Enables flexbox */
+    align-items: center;     /* Vertically center aligns the items */
+    justify-content: flex-start; /* Aligns items to the start of the flex container */
+    gap: 10px;               /* Adds space between the items */
+    }
+
+    .itemcard {
+    transition: transform 0.3s ease;
+    }
+
+    .itemcard:hover { /* hover is by gpt */
+    transform: translateY(-5px); /* Adjust the distance you want the card to move */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .itemthumbnail {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    }
+
+</style>
+
+<div class="container mt-4"></div>
+    <div class="row">
+        <!-- Profile Picture and Username -->
+        <div class="col-md-4 center-column">
+            {% csrf_token %}
+            <!-- No longer looks clickable :)-->
+                <div class="image-container">
+                    <img src="{% static 'images/frame.png' %}" alt="Background Image" class="background-image">
+                    {% if pageuser.user.profile.profile_pic %}
+                        <img src="{{ pageuser.user.profile.profile_pic.url }}" class="profile-image" alt="Profile Picture">
+                    {% else %}
+                        <img src="{% static 'images/default_user.jpg' %}" class="profile-image" alt="Default Profile Picture">
+                    {% endif %}
+                  </div>
+                
+            </label>
+        </form>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            <!-- Rounded card -->
+            <div class="card" style="border-radius: 20px; overflow: hidden;">
+                <div class="card-body">
+                    <div class="flex-container">
+                        <!-- Card body for padding and spacing -->
+                        <h4><strong>{{ pageuser.user.username|slice:":15" }}</strong></h4>
+                        <!-- Put the pets and like and stuff here pls pls pls remember and read seamus -->
+                        <!-- Displaying the user's details -->
+                        {% if pageuser.user.profile.venmo_url %}
+                            <a href="https://account.venmo.com/u/{{ pageuser.user.profile.venmo_url }}" title="{{ pageuser.user.profile.venmo_url }}" target="_blank"><img src="{% static 'images/venmo.png' %}" alt="Venmo" class="icon-image"></a>
+                        {% endif %}
+                        {% if pageuser.user.profile.pinterest_url %}
+                            <a href="https://www.pinterest.com/{{ pageuser.user.profile.pinterest_url }}/" title="{{ pageuser.user.profile.pinterest_url }}" target="_blank"><img src="{% static 'images/pinterest.png' %}" alt="Pinterest" class="icon-image"></a>
+                        {% endif %}
+                    </div>
+                    <p><strong>Name:</strong> {{ pageuser.user.profile.first_name|default_if_none:"" }} {{ user.profile.last_name|default_if_none:"" }}</p>
+                    <p><strong>Email:</strong> {{ pageuser.user.email|default:"" }}</p>
+                    <p>{{ user.profile.bio }}</p>
+                    <a href="{% url 'edit_profile_page' profile.id %}" class="btn btn-primary rounded-pill shadow">Edit Profile</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- USER'S SPECIFIC ITEMS -->
+    <div class="itemcards container-fluid mt-4 mb-4">
+        <h2 class="mb-3"> {{pageuser.user.username}}'s items </h2>
+        <div class="row row-cols-5 row-cols-md-5 row-cols-sm-3 g-4"> <!-- Use row-cols-{x} to specify the number of columns per row -->
+          {% for item in items %}
+            <div class="col"> <!-- Each card occupies one column -->
+              <div class="itemcard card h-100 rounded-0" style="max-width: 18rem;"> <!-- Set height to 100% to ensure all cards have the same height -->
+                <div class="card-body" title="View {{ item.name }}">
+                  <img src="{{ item.image.url }}" class="itemthumbnail img-thumbnail rounded-0 w-80" alt="Image of {{item.name}}">
+                  <h5 class="card-title mt-1">
+                    <a class="stretched-link" href="{% url 'item' item.id %}" style="text-decoration: none;"> {{ item.name|truncatechars:20 }} </a>
+                    {% if item.price > 9999 %}
+                    <span class="" style="float:right; font-size: smaller;"> ${{ item.price|localize }}</span>
+                    {% else %}
+                    <span class="" style="float:right;"> ${{ item.price|localize }}</span>
+                    {% endif %}
+                  </h5>
+                  <p class="card-text"> @{{ item.user }} </p>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>  
+{% endblock %}

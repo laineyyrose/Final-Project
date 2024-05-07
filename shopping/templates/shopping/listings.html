@@ -1,17 +1,182 @@
-{% extends 'shopping/base.html' %}
-
+{% extends 'base.html' %}
+{% load static %} {% load l10n %}
 {% block title %} Shop {% endblock %}
-<link rel="stylesheet" href="{% static 'listings.css' %}">
+<link rel="stylesheet" href="{% static 'shopping/listings.css' %}">
 {% block content %}
-<h1>
-    Polaroid Picture 📸
-</h1>
-<figure class="polaroid">
-<img
-    src="images/grace-maher-lH3GNpsRsnU-unsplash.jpg"
-    alt="Polaroid Picture"
-/>
-<figcaption>Polaroids are Cool 😎</figcaption>
-</figure>
+<!-- ANDY WORKED ON THIS ONE -->
+<!-- It's good to keep things like css/js seperated, but this causes less issues for hosting.-->
+<style> 
+  .floating-container {
+    position: fixed;
+    width: 100px;
+    height: 100px;
+    bottom: 0;
+    right: 0;
+    margin: 0.5% 0.5%;
+    z-index: 3; /* the z index might get a little crazy but it keeps it from conflicting with stretched links */
+  }
 
+  .btn-circle.btn-xl {
+    width: 70px;
+    height: 70px;
+    padding: 10px 16px;
+    border-radius: 35px;
+    font-size: 24px;
+    line-height: 1.33;
+}
+
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    padding: 0px 0px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.42857;
+}
+
+.img-thumbnail {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+}
+
+.itemPrice { /* this was an accident but i actually like how it looks */
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='calc(1.5em + .75rem + 2px)' width='100%'><text x='2' y='13' fill='gray' font-size='12' font-family='arial'>$</text></svg>");
+  padding-left: 12px;
+  background-repeat: no-repeat;
+}
+
+
+.card {
+  transition: transform 0.3s ease;
+}
+
+.card:hover { /* hover is by gpt */
+  transform: translateY(-5px); /* Adjust the distance you want the card to move */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+</style>
+<script>
+  function checkFile(input) { //GPT generated function
+        const file = input.files[0];
+        const fileType = file.type.toLowerCase();
+        const allowedExtensions = ["image/jpeg", "image.jpg", "image/png"];
+
+        // Check file type
+        if (!allowedExtensions.includes(fileType)) {
+            alert("Please select a valid image file (JPG, JPEG, PNG).");
+            input.value = ''; // Clear the file input
+            return;
+        }
+
+        // Check file name length
+        const fileName = file.name;
+        if (fileName.length > 50) {
+            alert("File name cannot exceed 50 characters.");
+            input.value = ''; // Clear the file input
+            return;
+        }
+
+        // Check file size
+        const maxSizeBytes = maxSizeMB * 1024 * 1024; // Convert MB to bytes
+        if (file.size > maxSizeBytes) {
+            alert("File size cannot exceed 1MB.");
+            input.value = ''; // Clear the file input
+            return;
+        }
+    }
+</script>
+
+<!-- Button trigger modal for posting items -->
+<div class="floating-container">
+  <button type="button" class="btn btn-primary btn-circle btn-xl" data-bs-toggle="modal" data-bs-target="#listingModal"> 
+    +
+  </button>
+</div>
+
+<!-- add item to listing modal, based off of Tre's modal from the calendar project -->
+<div class="modal fade" id="listingModal" tabindex="-1" aria-labelledby="listingModalLabel" aria-hidden="true"> <!-- USES add_item VIEW FUNCTION; the enctype allows this form WITHOUT using the django form!-->
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="listingsModalLabel">Post Item</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Add Item Form -->
+          <form method="POST" id="addItem" action="{% url 'add-item' %}" enctype='multipart/form-data'> <!-- THIS TRIGGERS THE add_item VIEW FUNCTION-->
+              {% csrf_token %}
+              <!--{{ form }}-->
+              <div class="form-group">
+                <label for="itemPhoto" class="form-label">Upload photo of item</label>
+                <input type="file" class="form-control" accept="image/png, image/jpeg, image/jpg" onchange="checkFile(this)" id="itemImage" name="image" required>              
+              </div>              
+              <div class="form-group">
+                  <label for="itemName">Item Name:</label>
+                  <input type="text" placeholder="What your item is (Max 50 characters.)" maxlength="50" aria-placeholder="What your item is (Max 50 characters.)" class="form-control" id="itemName" name="name" required>
+              </div>
+              <div class="form-group">
+                  <label for="itemPrice">Price:</label>
+                  <input type="number" class="itemPrice form-control" id="itemPrice" name="price" step=".01" min="0" max="9999999" maxlength="10" required>
+              </div>
+              <div class="form-group">
+                  <label for="itemDescription">Description:</label>
+                  <textarea class="form-control" placeholder="Describe your item here... (Max 250 characters.)" aria-placeholder="Describe your item here... (Max 250 characters.)" id="itemDescription" name="description" style="height: 100px" maxlength ="250"></textarea>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" name="add_item" class="btn btn-outline-info">Post</button>
+              <!-- Footer, put buttons here-->
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<div class="container-fluid m-2">
+  <h1> Shop </h1> <!--This is ugly so ask for opinion on this later-->
+  <!-- PRICE FILTER -->
+  <p style="margin-bottom: 5px;"> Filter by price: </p> 
+  <form action="{% url 'listings' %}" method="GET">
+    <span> $ </span>
+    <input type="number" style="max-width: 10%; height: 32px;" name="min_price" placeholder="Min price" min="0" step="any" value="{{ request.GET.min_price }}">
+    <span> - $</span>
+    <input type="number" style="max-width: 10%; height: 32px;" name="max_price" placeholder="Max price" min="0" step="any" value="{{ request.GET.max_price }}">
+    <button type="submit" aria-label="Filter" title="Filter by price" class="btn btn-primary p-1">Filter</button>
+    <a class="btn btn-secondary p-1" title="Clear filter" aria-label="Clear" href="{% url 'listings'%}">Clear</a>
+  </form> 
+  
+  <!-- ITEMS -->
+{% if item_display|length == 0 %}
+  <p class="text-center mt-4"> No items yet. Why not post something you've been meaning to sell? </p>
+{% else %}
+  <div class="itemcards container-fluid mt-4">
+    <div class="row row-cols-5 row-cols-md-5 row-cols-sm-3 g-4"> <!-- Use row-cols-{x} to specify the number of columns per row -->
+      {% for item in item_display %}
+        <div class="col"> <!-- Each card occupies one column -->
+          <div class="card h-100 rounded-0" style="max-width: 18rem;"> <!-- Set height to 100% to ensure all cards have the same height -->
+            <div class="card-body" title="View {{ item.name }}">
+              <img src="{{ item.image.url }}" class="img-thumbnail rounded-0 w-80" alt="Image of {{item.name}}">
+              <h5 class="card-title mt-1">
+                <a class="stretched-link" href="{% url 'item' item.id %}" style="text-decoration: none;"> {{ item.name|truncatechars:20 }} </a>
+                {% if item.price > 9999 %}
+                <span class="" style="float:right; font-size: smaller;"> ${{ item.price|localize }}</span>
+                {% else %}
+                <span class="" style="float:right;"> ${{ item.price|localize }}</span>
+                {% endif %}
+              </h5>
+              <p class="card-text"> @{{ item.user }} </p> 
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>  
+</div>
+{% endif %}
+
+
+ 
 {% endblock %}

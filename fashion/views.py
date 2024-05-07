@@ -1,19 +1,42 @@
 from django.shortcuts import render
-import openmeteo_requests
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.utils import timezone
+import openmeteo_requests #OPENMETEO API IMPORTS (all the way down to random) - DO NOT TOUCH!
 import requests_cache
 import pandas as pd
 from retry_requests import retry
 import random
+from django.core.cache import cache
 
 # Create your views here.
 
-#@login_required
+@login_required
+def thrift_map(request):
+    return render(request, 'fashion/thrift_map.html', {})
+
+
+@login_required
+#def color_picker(request):
+    #return render(request, 'fashion/color_picker.html', {})
+
+
+@login_required
 def weather(request):
-    """Shows the weather for the current day and suggests an 
+    """
+    Author: Andy
+    Shows the weather for the current day and suggests an 
     appropriate outfit based on it. 
 
     Returns weather using OpenMeteo API and based on the weather returns 
     three random images from a gallery based on the types of weather.
+
+    Args:
+        request (HttpRequest): The request object used to generate this view. 
+
+    Returns:
+        return (render): A render object that displays the weather.html template with the weather daily (24hr) 
+        data and current (15min) data, and a list of urls for the images to display.
     """
 
     # Setup the Open-Meteo API client with cache and retry on error
@@ -37,8 +60,17 @@ def weather(request):
     }
     responses = openmeteo.weather_api(url, params=params) #this calls the openmeteo weather api
 
-    # Process first location. Add a for-loop for multiple locations or weather models
-    response = responses[0]
+    response = responses[0] #this is the response for the API call
+
+    # Get the date and time of the weather update
+    update_time = pd.to_datetime(response.Current().Time(), unit='s', utc=True)
+
+    # Convert the UTC time to the local timezone
+    local_update_time = update_time.tz_convert('America/New_York')
+
+    # Format the local update time as a string to display
+    update_time_str = local_update_time.strftime("Updated %B %d, %Y, %I:%M %p")
+
 
     # Current values. The order of variables needs to be the same as requested.
     current = response.Current()
@@ -78,13 +110,39 @@ def weather(request):
     daily_data["uv_index_max"] = [round(value, 1) for value in daily_uv_index_max]
     daily_data["precipitation_probability_max"] = [round(value, 1) for value in daily_precipitation_probability_max]
 
-
     context = {
         'current_temp' : current_temperature_2m, # weather for the last 15 minutes
         'current_apparent' : current_apparent_temperature, # what it feels like for the past 15min
         'rain_status' : rain_status,
         'image_display' : image_display, #images for the carousel to display based on weather
         'daily_data': daily_data,  # weather for the day
+        'update_time': update_time_str # last time the weather was updated
     }
 
     return render(request, 'fashion/weather.html', context)
+
+
+colors = [
+    {'name': 'RED', 'image_path': 'images/colors/red.jpg', 'description': 'Crimson Charge'},
+    {'name': 'BLUE', 'image_path': 'images/colors/blue.jpg', 'description': 'Azure Depths'},
+    {'name': 'GREEN', 'image_path': 'images/colors/green.jpg', 'description': 'Emerald Meadow'},
+    {'name': 'PINK', 'image_path': 'images/colors/pink.jpg', 'description': 'Blush Blossom'},
+    {'name': 'PURPLE', 'image_path': 'images/colors/purple.jpg', 'description': 'Royal Lavender'},
+    {'name': 'SILVER', 'image_path': 'images/colors/silver.jpg', 'description': 'Sterling Gleam'},
+    {'name': 'ORANGE', 'image_path': 'images/colors/orange.jpg', 'description': 'Tangerine Zest'},
+    {'name': 'YELLOW', 'image_path': 'images/colors/yellow.jpg', 'description': 'Sunbeam Yellow'},
+    {'name': 'BLACK', 'image_path': 'images/colors/black.jpg', 'description': 'Midnight Black'},
+    {'name': 'WHITE', 'image_path': 'images/colors/white.jpg', 'description': 'Polar White'},
+    {'name': 'TURQUOISE', 'image_path': 'images/colors/turquoise.jpg', 'description': 'Lagoon Wave'},
+    {'name': 'NAVY', 'image_path': 'images/colors/navy.jpg', 'description': 'Deep Navy'}
+
+
+]
+
+def color_picker(request):
+    color = cache.get('daily_color')
+    if not color:
+        color = random.choice(colors)
+        cache.set('daily_color', color, timeout=86400)  # Cache for 24 hours
+    today_date = timezone.now().strftime('%d-%m-%Y') 
+    return render(request, 'fashion/color_picker.html', {'color': color, 'today_date': today_date})

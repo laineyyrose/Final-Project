@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block title %} Login {% endblock %}
+
+{% block content %} 
+
+{% load static %}
+<!-- Some of this was used from Lainey's last project -->
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%; /* Full height */
+        overflow: hidden; /* Prevents scrolling */
+    }
+
+    .bg {
+        background-image: url('https://cyathens.org/wp-content/uploads/2019/09/Copy-of-blog-featured-images-1170x650.png');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        background-position: center;
+        overflow: hidden; /* Additional overflow hidden */
+        min-height: 100vh;
+        width: 100vw; /* Full width */
+    }
+
+    .container {
+        width: 100%; /* Override width */
+        max-width: 100%; /* Ensure it does not exceed the viewport width */
+        padding: 0; /* Remove padding */
+        margin: 0; /* Remove margins */
+    }
+</style>
+<body>
+    <div class="bg" style="background-image: url('https://cyathens.org/wp-content/uploads/2019/09/Copy-of-blog-featured-images-1170x650.png')">
+        <div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+            <!-- Container for centering the content vertically and horizontally -->
+            <div class="col-md-8 col-lg-6">
+                <!-- Column for controlling the width of the card -->
+                <div class="card shadow" style="border-radius: 20px; overflow: hidden;">
+                    <!-- Card for styling and containing the login form -->
+                    <div class="card-body p-5">
+                        <!-- Card body for padding and spacing -->
+                        <h1 class="h3 mb-2 font-weight-normal text-center"><strong>Welcome! Please sign in.</strong></h1>
+                        <!-- Heading for the login form -->
+                        <form method = "post">
+                            {% csrf_token %} 
+                            <!-- check for messages passed through the view -->
+                            {% if messages %}
+                                <div class="alert alert-danger shadow" role="alert" style="border-radius: 20px; overflow: hidden;">
+                                    <!-- display the messages, these are our error messages -->
+                                    {% for message in messages %}
+                                        <p class="text-center">{{ message }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <div class="alert alert-primary shadow" role="alert" style="border-radius: 20px; overflow: hidden;">
+                                    Welcome to Four Winds Thrift! Please enter your username and password to login. If you're new here, please register for a new account with the link below.
+                                </div>
+                            {% endif %}
+                            {% for field in form %}
+                                <!-- Looping through each form field -->
+                                <div class="mb-4 text-center">
+                                    <!-- Div for spacing between form fields -->
+                                    {{ field.label_tag }}
+                                    <!-- Displaying the label for the form field -->
+                                    <div class="input-group input-group-lg"></div>
+                                    <!-- Div for styling the input field -->
+                                    {{ field }}
+                                    <!-- Displaying the form field -->
+                                </div>
+                            {% endfor %}
+                            <div class="text-center">
+                                <button class="btn btn-primary btn-block rounded-pill shadow" type="submit">Login</button>
+                            </div>
+                            <!-- Button for submitting the form -->
+                            <div class="text-center mt-5">
+                                <!-- Div for centering the text and adding margin top -->
+                                <p>Don't have an account? Create one <a href="{% url 'register' %}">Here</a>!</p>
+                                <!-- Link for registering a new account -->
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+{% endblock %}
+
