@@ -11,12 +11,11 @@ class Item(models.Model):
     """    
     image = models.ImageField(max_length=100, upload_to='itemimages/', null=False) #limits file names
     name = models.CharField(max_length=50)
-    price = models.DecimalField(max_digits=9, decimal_places=2) 
-    #allows listings up to a million dollars... idk where we should cap this
+    price = models.DecimalField(max_digits=9, decimal_places=2) #allows listings up to a million dollars... 
     description = models.CharField(max_length=250, null=True)
     date_posted = models.DateTimeField(default=timezone.now)
 
-    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE) #foreignkey because a user can have multiple items
 
     def __str__(self):
         return self.name
@@ -29,8 +28,8 @@ class Comment(models.Model):
     Models for the comments on the items in the database that will display on the item page.
     Should have capability to display the comment, the user who posted it, and the item it is posted on.
     """    
-    comment = models.CharField(max_length=250) #might be bad naming practice
-    user = models.OneToOneField(User, null=True, on_delete=models.PROTECT) #when the user is deleted, the comment is protected (LAINEY: do we wanna make it delete their comments though?)
+    comment = models.CharField(max_length=250)
+    user = models.ForeignKey(User, null=True, on_delete=models.PROTECT) #when the user is deleted, the comment is protected (LAINEY: do we wanna make it delete their comments though?)
     item = models.ForeignKey(Item,on_delete=models.CASCADE,)
     date_posted = models.DateTimeField(default=timezone.now)
 

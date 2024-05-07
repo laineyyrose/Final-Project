@@ -28,8 +28,7 @@ def listings(request):
         min_price = request.GET.get('min_price', '')
         max_price = request.GET.get('max_price', '')
 
-        # Assuming you have a queryset called item_display
-        item_display = Item.objects.all()
+        item_display = Item.objects.all().order_by('-date_posted')
 
         # Filter by minimum price if provided
         if min_price != '':
@@ -83,9 +82,9 @@ def delete_item(request, pk):
         redirect: Redirects the user back to the listings page after deleting an item.
     """
     item = get_object_or_404(Item, pk=pk)
-    if request.user != item.user:
+    if request.user != item.user: #check if the user is the owner of the item
         return HttpResponseForbidden()
-    if request.method == 'POST':
+    if request.method == 'POST': 
         item.delete()
         return redirect('listings')
     else:
@@ -109,7 +108,7 @@ def edit_item(request, pk):
         return HttpResponseForbidden()
     if request.method == 'POST':
         form = EditItem(request.POST, request.FILES, instance=item)
-        if form.is_valid():
+        if form.is_valid(): #simple validation
             form.save()
             return redirect('item', pk=pk)
     else:
@@ -168,11 +167,14 @@ def add_comment(request, pk):
 
 @login_required
 def delete_comment(request, pk):
-    """_summary_
+    """Removes the text of the comment and replaces it with a message saying it has been deleted.
 
     Args:
-        request (_type_): _description_
-        pk (_type_): _description_
+        request (HttpRequest): The request object used to generate this view. Specifically, this is probably post.
+        pk : The unique primary key of the comment.
+
+    Returns:
+        redirect: Redirects the user back to the item page after deleting a comment.
     """
     comment = get_object_or_404(Comment, pk=pk)
     if request.user != comment.user:

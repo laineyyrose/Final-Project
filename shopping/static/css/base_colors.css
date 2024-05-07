@@ -35,6 +35,21 @@
     border-color: var(--bs-warning);
   }
 
+  .btn-outline-primary {
+    color: var(--bs-primary);
+    border-color: var(--bs-primary);
+  }
+
+  .btn-outline-secondary {
+    color: var(--bs-secondary);
+    border-color: var(--bs-secondary);
+  }
+
+  .btn-outline-danger {
+    color: var(--bs-danger);
+    border-color: var(--bs-danger);
+  }
+
   /* Override Navbar colors */
   .navbar {
     background-color: var(--bs-primary);
