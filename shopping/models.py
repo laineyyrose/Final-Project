@@ -29,7 +29,7 @@ class Comment(models.Model):
     Should have capability to display the comment, the user who posted it, and the item it is posted on.
     """    
     comment = models.CharField(max_length=250)
-    user = models.OneToOneField(User, null=True, on_delete=models.PROTECT) #when the user is deleted, the comment is protected (LAINEY: do we wanna make it delete their comments though?)
+    user = models.ForeignKey(User, null=True, on_delete=models.PROTECT) #when the user is deleted, the comment is protected (LAINEY: do we wanna make it delete their comments though?)
     item = models.ForeignKey(Item,on_delete=models.CASCADE,)
     date_posted = models.DateTimeField(default=timezone.now)
 
