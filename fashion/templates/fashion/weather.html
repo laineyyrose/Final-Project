@@ -50,7 +50,7 @@
           {% elif rain_status == "Sprinkling" %}
           <p>It's sprinkling, you might want to wear a jacket.</p>
           {% else %}
-           <p class="mt-1 mb-0"> {% if daily_data.daily_data.temperature_2m_max.0 >= 70 %} It may be hot outside, you might want to dress lighter. {% else %} It may be cold out, you might want to dress warmer. {% endif %} </p>
+           <p class="mt-1 mb-0"> {% if daily_data.temperature_2m_max.0 >= 70 %} It may be hot outside, you might want to dress lighter. {% else %} It may be cold out, you might want to dress warmer. {% endif %} </p>
             {% if daily_data.uv_index_max.0 >= 5 %} <p> Wear sunscreen, the <a href="https://www.weather.gov/ilx/uv-index" target="_blank">UV index</a> is high. </p> {% endif %} 
           {% endif %}
           <!-- IMAGE CAROUSEL OF OUTFITS -->
