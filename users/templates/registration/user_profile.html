@@ -105,9 +105,9 @@
                             <a href="https://www.pinterest.com/{{ pageuser.user.profile.pinterest_url }}/" title="{{ pageuser.user.profile.pinterest_url }}" target="_blank"><img src="{% static 'images/pinterest.png' %}" alt="Pinterest" class="icon-image"></a>
                         {% endif %}
                     </div>
-                    <p><strong>Name:</strong> {{ pageuser.user.profile.first_name|default_if_none:"" }} {{ user.profile.last_name|default_if_none:"" }}</p>
+                    <p><strong>Name:</strong> {{ pageuser.user.profile.first_name|default_if_none:"" }} {{ pageuser.user.profile.last_name|default_if_none:"" }}</p>
                     <p><strong>Email:</strong> {{ pageuser.user.email|default:"" }}</p>
-                    <p>{{ user.profile.bio }}</p>
+                    <p>{{ pageuser.user.profile.bio }}</p>
                     <a href="{% url 'edit_profile_page' profile.id %}" class="btn btn-primary rounded-pill shadow">Edit Profile</a>
                 </div>
             </div>
