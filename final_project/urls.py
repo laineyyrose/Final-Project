@@ -22,7 +22,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', RedirectView.as_view(pattern_name='users:logout_and_redirect', permanent=False)),
+    path('', RedirectView.as_view(pattern_name='users:logout_and_redirect', permanent=True)),
     #path('', RedirectView.as_view(url='users/login/', permanent=True)),
     path("admin/", admin.site.urls),
     path('', include('shopping.urls')),
