@@ -2,6 +2,11 @@
 {% block title %} Login {% endblock %}
 
 {% block content %} 
+{% if user.is_authenticated %}
+<script>
+    window.location.href = "{% url 'logout' %}";
+</script>
+{% endif %}
 
 {% load static %}
 <!-- Some of this was used from Lainey's last project -->
@@ -54,7 +59,7 @@
                                     {% endfor %}
                                 </div>
                             {% else %}
-                                <div class="alert alert-primary shadow" role="alert" style="border-radius: 20px; overflow: hidden;">
+                                <div class="popup alert alert-primary shadow" role="alert" style="border-radius: 20px; overflow: hidden;">
                                     Welcome to Four Winds Thrift! Please enter your username and password to login. If you're new here, please register for a new account with the link below.
                                 </div>
                             {% endif %}
