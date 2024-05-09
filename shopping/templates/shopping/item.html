@@ -38,6 +38,20 @@
     // Open the mailto link in a new window or tab
     window.open(mailtoLink);
   }
+    document.addEventListener("DOMContentLoaded", function() {
+      highlightComments();
+    });
+
+    function highlightComments() {
+      var comments = document.getElementsByClassName("card comment");
+      for (var i = 0; i < comments.length; i++) {
+        var commentText = comments[i].textContent.toLowerCase();
+        if (commentText.includes("buy") || commentText.includes("want") || commentText.includes("want to buy")) {
+          comments[i].style.border = "2px solid green";
+          comments[i].style.backgroundColor = "lightgreen";
+        }
+      }
+    }
 </script>
 
 <!-- MODALS -->
@@ -128,8 +142,8 @@
         <p>No comments yet. If you want to purchase this item, let {{item.user}} know!</p>
       {% else %}
         {% for comment in comments %}
-          <div class="card p-1 rounded-0 mb-3" style="width: 30rem;">
-            <div class="card-body pb-0">
+          <div class="card comment p-1 rounded-0 mb-3" style="width: 30rem;">
+            <div class="card-body comment pb-0">
               {% if comment.user == request.user %} {%  if comment.comment != 'This comment has been deleted.'%}
               <button class="btn-close" style="float:right;" data-bs-toggle="modal" aria-label="Delete" data-bs-target="#deleteCommentModal" title="Delete post (only deletes text)"></button>
               {% endif %} {% endif %}
