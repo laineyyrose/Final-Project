@@ -27,6 +27,7 @@
         height: auto;
       }
 
+
       .navbar-img-paint {
         width: 60px; 
         height: auto;
@@ -41,7 +42,16 @@
       }
 
       /* Hover label effect */
+
+      /* Hover label effect */
       .navbar-link {
+        position: relative;
+        display: flex; /* Use flex to center the image/link inside the nav-item */
+        align-items: center; /* Center vertically */
+        justify-content: center; /* Center horizontally */
+        width: 100%; /* Fill the nav-item container */
+        height: 100%; /* Fill the nav-item container */
+        text-decoration: none; /* Optional: removes underline from links */
         position: relative;
         display: flex; /* Use flex to center the image/link inside the nav-item */
         align-items: center; /* Center vertically */
@@ -66,6 +76,7 @@
         transition: opacity 0.3s ease, visibility 0s linear 0.3s;
       }
 
+      .navbar-link:hover .label {
       .navbar-link:hover .label {
         visibility: visible;
         opacity: 1;

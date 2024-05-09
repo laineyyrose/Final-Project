@@ -5,6 +5,7 @@ from . import views
 #from django.contrib.auth import logout
 #from .views import UserEditView, RegisterView, ShowProfilePageView, EditProfilePageView
 
+#app_name = 'users'
 urlpatterns = [
     path('register/', UserRegisterView.as_view(), name='register'),
     path('edit_profile/', UserEditView.as_view(), name='edit_profile'),

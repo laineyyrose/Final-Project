@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %} {% load l10n %}
-{% block title %} Shop {% endblock %}
+{% block title %}Shop{% endblock %}
 <link rel="stylesheet" href="{% static 'shopping/listings.css' %}">
 {% block content %}
 <!-- ANDY WORKED ON THIS ONE -->
@@ -167,7 +167,7 @@
                 <span class="" style="float:right;"> ${{ item.price|localize }}</span>
                 {% endif %}
               </h5>
-              <p class="card-text"> @{{ item.user }} </p> <!-- fix when adding lainey's stuff -->
+              <p class="card-text"> @{{ item.user }} </p> 
             </div>
           </div>
         </div>

@@ -161,3 +161,7 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 .cache.sqlite
+
+# This is the stretch goal stuff I don't want to commit
+fashion/static/images/community_gallery/galleryblack.jpg
+fashion/templates/fashion/community_gallery.html

@@ -12,7 +12,6 @@ Four Winds Thrift is a website meant for New College students to buy and sell cl
 - [x] Users can look at other people’s profiles and see what they’re selling.
 - [x] Users can create a profile to post listings.
 - [x] Users can look at their own profile and edit it.
-- [ ] Users can post pictures of their outfits to a community gallery page.
 - [x] There will be a weather page to recommend users how they should dress in preparation for the weather that day.
-- [ ] There will be a color of the day page for users wanting outfit inspiration.
+- [x] There will be a color of the day page for users wanting outfit inspiration.
 - [x] There will be a local thrift/second-hand stores page so NCF students know where the best locations are!
