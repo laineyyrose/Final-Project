@@ -118,7 +118,7 @@
     
     <!-- USER'S SPECIFIC ITEMS -->
     <div class="itemcards container-fluid mt-4 mb-4">
-        <h2 class="mb-3"> {{pageuser.user.username}}'s items </h2>
+        <h2 class="mb-3 fw-semibold" style="color:rgb(55, 53, 56);"> {{pageuser.user.username}}'s items </h2>
         <div class="row row-cols-5 row-cols-md-5 row-cols-sm-3 g-4"> <!-- Use row-cols-{x} to specify the number of columns per row -->
           {% for item in items %}
             <div class="col"> <!-- Each card occupies one column -->
