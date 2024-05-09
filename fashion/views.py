@@ -140,5 +140,5 @@ def color_picker(request):
     if not color:
         color = random.choice(colors)
         cache.set('daily_color', color, timeout=86400)  # Cache for 24 hours
-    today_date = timezone.now().strftime('%d-%m-%Y') 
+    today_date = timezone.now().strftime('%m-%d-%Y') 
     return render(request, 'fashion/color_picker.html', {'color': color, 'today_date': today_date})
