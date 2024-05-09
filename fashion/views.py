@@ -16,10 +16,6 @@ def thrift_map(request):
     return render(request, 'fashion/thrift_map.html', {})
 
 
-@login_required
-#def color_picker(request):
-    #return render(request, 'fashion/color_picker.html', {})
-
 
 @login_required
 def weather(request):

@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "shopping.apps.ShoppingConfig",
     "users.apps.UsersConfig",
-    "fashion.apps.FashionConfig"
+    "fashion.apps.FashionConfig",
+    "crispy_forms"
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -71,7 +72,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "django.template.context_processors.tz",
-                "shopping.context_processors.popup_messages", 
+
             ],
         },
     },
