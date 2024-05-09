@@ -38,11 +38,11 @@
         
         <!-- Additional user information forms -->
         <div class="form-group">
-            <label for="id_venmo">Venmo:</label>
+            <label for="id_venmo">Venmo Username:</label>
             <input type="text" class="form-control" name="venmo_url" id="id_venmo" value="{{ user.profile.venmo_url }}" style="border-radius: 20px; overflow: hidden;">
         </div>
         <div class="form-group">
-            <label for="id_pinterest">Pinterest:</label>
+            <label for="id_pinterest">Pinterest Username:</label>
             <input type="text" class="form-control" name="pinterest_url" id="id_pinterest" value="{{ user.profile.pinterest_url }}" style="border-radius: 20px; overflow: hidden;">
         </div>
         <a href="{% url 'create_profile_page' %}" class="btn btn-primary rounded-pill shadow mt-3 ">Back</a>
