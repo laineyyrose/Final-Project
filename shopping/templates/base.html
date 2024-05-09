@@ -92,13 +92,36 @@
       background-color: rgba(255, 255, 255, 0.2); /* Light background for visibility */
       border-radius: 5px; /* Rounded corners */
       }
+      .page-title {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2.5rem;
+      color: #fff;
+      font-weight: bold;
+      padding: 20px 30px; /* More padding for a larger feel */
+      border-bottom: 2px solid #e7b6ff;
+      width: 50%;
+      margin: 20px auto 40px;
+      background: linear-gradient(to right, #845ec2, #d65db1);
+      border-radius: 15px; /* Rounded corners */
+      box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+      }
+      body {
+        background: linear-gradient(to right, #a1c3d1, #80c5f7);
+      }
+      .navbar {
+        background: linear-gradient(to right, #e64398, #f172a1);
+      }
+      .popup {
+        background-color: #e2c1ff;
+      }
     </style>
 
   </head>
   {% load static %}
   <body>
     {% if user.is_authenticated %}
-    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-light">
       <div class="container-fluid justify-content-start">
         <!-- Home -->
         <a class="navbar-brand" href="{% url 'home_page' %}" title="Home"><img src="{% static 'images/navbar/file.png' %}" alt="Logo" width="30" height="24" class="navbar-img">
@@ -117,7 +140,7 @@
               <!-- Color Picker -->
               <a class="navbar-link {% if request.resolver_match.url_name == 'color_picker' %}current-page{% endif %}" href="{% url 'color_picker' %}">
                 <img src="{% static 'images/navbar/paint.png' %}" alt="Logo" class="navbar-img-paint">
-                <span class="label">Color Picker</span>
+                <span class="label">Color of the Day</span>
               </a>
             </li>
             <li class="nav-item">
@@ -193,6 +216,7 @@
 
 <!-- Bootstrap Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 
 
 </body>

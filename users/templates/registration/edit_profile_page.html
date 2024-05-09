@@ -16,21 +16,66 @@
           reader.readAsDataURL(input.files[0]);
        }
     }
+    
+    
  </script>
+<style>
+    /* Style for the image */
+    .profile-pic {
+        position: relative;
+        display: flex; /* Use flex to center the image/link inside the nav-item */
+        align-items: center; /* Center vertically */
+        justify-content: center; /* Center horizontally */
+        width: 100%; /* Fill the nav-item container */
+        height: 100%; /* Fill the nav-item container */
+        text-decoration: none; /* Optional: removes underline from links */
+    }
+
+    /* Label styling */
+    .label {
+        position: absolute;
+        font-size: medium;
+        top: 120%; /* Position the label below the icon */
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #F0EBF4;
+        color: #E64398;
+        padding: 5px 10px;
+        border-radius: 5px;
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+    }
+
+    /* Hover effect */
+    .profile-pic-container:hover .label {
+        visibility: visible;
+        opacity: 1;
+        transition-delay: 0s;
+    }
+    .profile-pic-container {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+    }
+</style>
+
 
 <div class="container mt-5">
-    <h2 class="mb-4">Edit Profile</h2>
+    <h2 class="page-title">Edit Profile</h2>
     <form method="POST" action="{% url 'edit_profile_page' profile.id %}" enctype="multipart/form-data">
         {% csrf_token %}
         <!-- Profile Picture Upload -->
         <div class="form-group text-center">
-            <label for="profilePictureUpload">
+            <label for="profilePictureUpload" class="profile-pic-container">
                 {% if user.profile.profile_pic %}
                 <!-- Handle actual profile picture stuff here -->
                 <!-- routes either to users profile picture or the default -->
-                    <img src="{{ user.profile.profile_pic.url }}" class="img-fluid rounded-circle shadow mb-3" id="icon" alt="if you see this sorry" style="cursor: pointer; width: 150px; height: 150px;" >
+                    <img src="{{ user.profile.profile_pic.url }}" class="profile-pic img-fluid rounded-circle shadow mb-3" id="icon" alt="if you see this sorry" style="cursor: pointer; width: 150px; height: 150px;" >
+                    <span class="label">Edit Profile Picture</span>
                 {% else %}
-                    <img src="{% static 'images/default_user.jpg' %}" id="icon" class="img-fluid rounded-circle shadow mb-3" alt="Default Profile Picture" style="cursor: pointer; width: 150px; height: 150px;">
+                    <img src="{% static 'images/default_user.jpg' %}" id="icon" class="profile-pic img-fluid rounded-circle shadow mb-3" alt="Default Profile Picture" style="cursor: pointer; width: 150px; height: 150px;">
+                    <span class="label">Edit Profile Picture</span>
                 {% endif %}
             </label>
             <input type="file" name="profile_pic" id="profilePictureUpload" class="d-none" onchange="previewImage(event)"> <!-- andy edited the image preview -->

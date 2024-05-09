@@ -9,6 +9,7 @@
     border: 3px solid #020202;
     margin: 20px auto;
     font-family: Arial, sans-serif;
+    background-color: white;
     }
 
     .color-display {
@@ -52,14 +53,20 @@
     font-weight: bold;
     }
 </style>
-<div class="pantone-card">
-    <div class="color-display">
-        <img src="{% static color.image_path %}" alt="Color Image" class="color-image">
+<div class="container mt-4"></div>
+    <h1 class="page-title">Color of the Day</h1>
+    <div class="popup alert alert-primary shadow" role="alert" style="border-radius: 20px; overflow: hidden;">
+        Explore Today's Color Inspiration! 🎨 Discover which color best reflects today's mood and style trends. Get inspired with outfit ideas to enhance your look with today's featured color!
     </div>
-    <div class="color-info">
-        <h1 class="color-name">{{ color.name }}</h1>
-        <p class="color-date">{{ today_date }}</p> 
-        <p class="color-description">{{ color.description }}</p>
+        <div class="pantone-card">
+            <div class="color-display">
+                <img src="{% static color.image_path %}" alt="Color Image" class="color-image">
+            </div>
+            <div class="color-info">
+                <h1 class="color-name">{{ color.name }}</h1>
+                <p class="color-date">{{ today_date }}</p> 
+                <p class="color-description">{{ color.description }}</p>
+            </div>
+        </div>
     </div>
-</div>
 {% endblock %}

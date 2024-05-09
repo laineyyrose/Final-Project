@@ -1,7 +1,92 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-    <h1>Welcome to Our Website!</h1>
-    <p>Thank you for visiting our site. We are excited to have you here.</p>
-    <p>Feel free to explore and discover all the amazing features we have to offer.</p>
+<title>Four Winds Thrift</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+body {
+    /* Use this if you want the navbar to be on top of the image, otherwise put this in .bg */
+    background-image: url('https://cyathens.org/wp-content/uploads/2019/09/Copy-of-blog-featured-images-1170x650.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+.bg {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+.card {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    max-width: 800px;
+    text-align: center;
+    margin: 10vh auto 300px; /* Reduce top margin to move the card up */
+    position: relative; /* Ensures that the margin adjustment works as expected */
+}
+.main-title {
+    color: #67417a;
+    margin-bottom: 15px;
+}
+.card h2, .card p, .card ol, .card li {
+    color: #333;
+    line-height: 1.6;
+}
+a.button {
+    background-color: #e7b6ff;
+    color: white;
+    padding: 10px 20px;
+    margin: 10px 2px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+a.button:hover {
+    background-color: #8e5c9e;
+}
+.fa {
+    margin-right: 8px;
+}
+</style>
+
+<div class="bg">
+    <div class="card">
+        <h1 class="main-title">Four Winds Thrift</h1>
+        <p>Your one-stop shop for thrifted goods at New College!</p>
+        <p>Our website offers a space where students can post and sell their used items, making it easy for you to declutter your space and earn some extra money. It's also a perfect place to get fashion inspiration and discover trends within our school community. Join us to connect with other fashion-minded students and transform the way you think about style and sustainability.</p>
+        <p>If you are new here, get started by creating a profile or browsing our listings!</p>
+        <div>
+            {% if user.is_authenticated %}
+                {% if user.profile %}
+                    <a href="{% url 'show_profile_page' user.profile.id %}" class="button"><i class="fa fa-user-circle"></i> View Profile</a>
+                {% else %}
+                    <a href="{% url 'create_profile_page' %}" class="button"><i class="fa fa-user-plus"></i> Create Profile</a>
+                {% endif %}
+            {% else %}
+                <a href="{% url 'create_profile_page' %}" class="button"><i class="fa fa-user-plus"></i> Create Profile</a>
+            {% endif %}
+            <a href="{% url 'listings' %}" class="button"><i class="fa fa-search"></i> Browse Items</a>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
