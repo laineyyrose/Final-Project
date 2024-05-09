@@ -150,7 +150,7 @@
               <!-- Color Picker -->
               <a class="navbar-link {% if request.resolver_match.url_name == 'color_picker' %}current-page{% endif %}" href="{% url 'color_picker' %}">
                 <img src="{% static 'images/navbar/paint.png' %}" alt="Logo" class="navbar-img-paint">
-                <span class="label">Color of the Day</span>
+                <span class="label" style="width: 9rem;">Color of the Day</span>
               </a>
             </li>
             <li class="nav-item">
@@ -164,7 +164,7 @@
               <!-- Map -->
               <a class="navbar-link {% if request.resolver_match.url_name == 'thrift_map' %}current-page{% endif %}" href="{% url 'thrift_map' %}">
                 <img src="{% static 'images/navbar/globe.png' %}" alt="Logo" class="navbar-img-globe">
-                <span class="label">Thrift Map</span>
+                <span class="label" style="width: 6rem;">Thrift Map</span>
               </a>
             </li>
           </ul>
