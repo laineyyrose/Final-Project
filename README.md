@@ -47,7 +47,9 @@ There are a lot of different ways to deploy a Django site. For this project we u
 
 3. Navigate to the directory.
 
-```cd Final-Project```
+```
+cd Final-Project
+```
 
 3. Create a virtual environment for this project. This example uses `venv` as the name.
 
@@ -78,8 +80,10 @@ PythonAnywhere recommends using SSH keys to be able to push and pull to your pro
 To do this without paying, you'll want to configure the git in PythonAnywhere with your information. 
 
 Run: 
-```git config --global user.email "Your Email"```
-```git config --global user.name "Your Name"```
+```
+git config --global user.email "Your Email"
+git config --global user.name "Your Name"
+```
 
 Your Github name should be what's in your profile's name field, NOT your username.
 
