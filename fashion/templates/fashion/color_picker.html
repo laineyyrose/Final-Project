@@ -1,7 +1,13 @@
+<!-- LAINEY -->
+<!-- This is the color_picker.html file -->
 {% extends 'base.html' %}
+
 {% load static %}
+
 {% block title %} Color Picker {% endblock %}
+
 {% block content %}
+<!-- CSS styles for the color picker -->
 <style>
     .pantone-card {
     width: 500px;
@@ -11,64 +17,67 @@
     font-family: Arial, sans-serif;
     background-color: white;
     }
-
     .color-display {
     height: 70%;
-    background-color: #fff; /* Default background in case image fails to load */
+    background-color: #fff; /* default background in case image fails to load */
     display: flex;
     justify-content: center;
     align-items: center;
     }
-
     .color-image {
-    width: 400px; /* Ensure image fits within the color display area */
-    height: 375px; /* Limit height to fit within the area */
+    width: 400px; 
+    height: 375px; 
     display: block;
     object-fit: cover;
     object-fit: cover;
     }
-
     .color-info {
-    padding: 5px 45px; /* Reduce top padding */
-    text-align: left;  /* align text to the left */
+    padding: 5px 45px;
+    text-align: left; 
     display: flex;
     flex-direction: column;
-    justify-content: space-between;  /* align content to the top */
-    height: auto;  /* Adjust based on your total card height */
+    justify-content: space-between;  
+    height: auto;
     }
-
     .color-name {
     font-size: 50px;
     font-weight: bold;
     margin-bottom: 0px;
     margin-bottom: 0px;
     }
-
     .color-date {
     font-size: 25px;
     font-weight: bold;
     margin-bottom: 0px;
     }
-
     .color-description {
     font-size: 25px;
     font-weight: bold;
     }
 </style>
+
+<!-- Container div -->
 <div class="container mt-4"></div>
-    <h1 class="page-title">Color of the Day</h1>
-    <div class="popup alert alert-primary shadow" role="alert" style="border-radius: 20px; overflow: hidden;">
-        Explore Today's Color Inspiration! 🎨 Discover which color best reflects today's mood and style trends. Get inspired with outfit ideas to enhance your look with today's featured color!
+
+<!-- Page title -->
+<h1 class="page-title">Color of the Day</h1>
+
+<!-- Popup message -->
+<div class="popup alert alert-primary shadow" role="alert" style="border-radius: 20px; overflow: hidden;">
+    Explore Today's Color Inspiration! 🎨 Discover which color best reflects today's mood and style trends. Get inspired with outfit ideas to enhance your look with today's featured color!
+</div>
+
+<!-- Pantone card -->
+<div class="pantone-card">
+    <!-- Color display -->
+    <div class="color-display">
+        <img src="{% static color.image_path %}" alt="Color Image" class="color-image">
     </div>
-        <div class="pantone-card">
-            <div class="color-display">
-                <img src="{% static color.image_path %}" alt="Color Image" class="color-image">
-            </div>
-            <div class="color-info">
-                <h1 class="color-name">{{ color.name }}</h1>
-                <p class="color-date">{{ today_date }}</p> 
-                <p class="color-description">{{ color.description }}</p>
-            </div>
-        </div>
+    <!-- Color info -->
+    <div class="color-info">
+        <h1 class="color-name">{{ color.name }}</h1>
+        <p class="color-date">{{ today_date }}</p> 
+        <p class="color-description">{{ color.description }}</p>
     </div>
+</div>
 {% endblock %}

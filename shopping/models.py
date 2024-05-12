@@ -44,7 +44,7 @@ class Comment(models.Model):
         return reverse('comment', kwargs={'pk': self.pk})
 
 
-
+# LAINEY (this class isn't used as much, however I created it just because I was following a tutorial and wanted to make sure I was following along)
 class Post(models.Model):
     title = models.CharField(max_length=255)
     header_image = models.ImageField(null=True, blank=True, upload_to='images/')
@@ -56,18 +56,18 @@ class Post(models.Model):
         return self.title + ' | ' + str(self.author)
     
     def get_absolute_url(self):
-        # return reverse('article-detail', args=(str(self.id)))
         return reverse('home')
     
+
+# LAINEY
 class Profile(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=50, null=True, blank=True)
-    last_name = models.CharField(max_length=50, null=True, blank=True)
-    bio = models.TextField(max_length=50, null=True, blank=True)
-    profile_pic = models.ImageField(null=True, blank=True, upload_to='images/userprofiles/')
-    pinterest_url = models.CharField(max_length=255, null=True, blank=True)
-    venmo_url = models.CharField(max_length=255, null=True, blank=True)
+    first_name = models.CharField(max_length=50, null=True, blank=True)  # First name of the user
+    last_name = models.CharField(max_length=50, null=True, blank=True)  # Last name of the user
+    bio = models.TextField(max_length=50, null=True, blank=True)  # Bio of the user
+    profile_pic = models.ImageField(null=True, blank=True, upload_to='images/userprofiles/')  # Profile picture of the user
+    pinterest_url = models.CharField(max_length=255, null=True, blank=True)  # Pinterest URL of the user
+    venmo_url = models.CharField(max_length=255, null=True, blank=True)  # Venmo URL of the user
 
     def __str__(self):
         return str(self.user)
-    

@@ -1,15 +1,20 @@
+<!-- LAINEY -->
+<!-- gpt helped with some of the styling on this page -->
 {% extends 'base.html' %}
 {% load static %}
-
 {% block content %}
+
 <title>Four Winds Thrift</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 <style>
+/* Reset default styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
+/* Set height and width of html and body to 100% */
 html, body {
     height: 100%;
     width: 100%;
@@ -17,13 +22,16 @@ html, body {
     padding: 0;
     overflow-x: hidden;
 }
+
+/* Set background image for body */
 body {
-    /* Use this if you want the navbar to be on top of the image, otherwise put this in .bg */
     background-image: url('https://cyathens.org/wp-content/uploads/2019/09/Copy-of-blog-featured-images-1170x650.png');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
 }
+
+/* Styling for the main container */
 .bg {
     min-height: 100vh;
     display: flex;
@@ -31,6 +39,8 @@ body {
     justify-content: center;
     padding: 0;
 }
+
+/* Styling for the card container */
 .card {
     background-color: #f8f9fa;
     border-radius: 8px;
@@ -41,14 +51,20 @@ body {
     margin: 10vh auto 300px; /* Reduce top margin to move the card up */
     position: relative; /* Ensures that the margin adjustment works as expected */
 }
+
+/* Styling for the main title */
 .main-title {
     color: #67417a;
     margin-bottom: 15px;
 }
+
+/* Styling for the text inside the card */
 .card h2, .card p, .card ol, .card li {
     color: #333;
     line-height: 1.6;
 }
+
+/* Styling for the buttons */
 a.button {
     background-color: #e7b6ff;
     color: white;
@@ -60,14 +76,17 @@ a.button {
     text-decoration: none;
     transition: background-color 0.3s;
 }
+
+/* Styling for the buttons on hover */
 a.button:hover {
     background-color: #8e5c9e;
 }
+
+/* Styling for the font awesome icons */
 .fa {
     margin-right: 8px;
 }
 </style>
-
 <div class="bg">
     <div class="card">
         <h1 class="main-title">Four Winds Thrift</h1>
@@ -88,5 +107,4 @@ a.button:hover {
         </div>
     </div>
 </div>
-
 {% endblock %}

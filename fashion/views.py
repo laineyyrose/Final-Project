@@ -13,7 +13,18 @@ from django.core.cache import cache
 
 @login_required
 def thrift_map(request):
+    """
+    Author: Lainey
+    Description: Dsiplays the html template with the google maps iframe and cards describing each thrift store on the map.
+
+    Args:
+        request (HttpRequest): The request object used to generate this view. 
+
+    Returns:
+        return (render): A render object that displays the thrift_map.html template.
+    """
     return render(request, 'fashion/thrift_map.html', {})
+
 
 
 
@@ -118,6 +129,7 @@ def weather(request):
     return render(request, 'fashion/weather.html', context)
 
 
+# Defining colors to use for the color_picker view.
 colors = [
     {'name': 'RED', 'image_path': 'images/colors/red.jpg', 'description': 'Crimson Charge'},
     {'name': 'BLUE', 'image_path': 'images/colors/blue.jpg', 'description': 'Azure Depths'},
@@ -131,14 +143,19 @@ colors = [
     {'name': 'WHITE', 'image_path': 'images/colors/white.jpg', 'description': 'Polar White'},
     {'name': 'TURQUOISE', 'image_path': 'images/colors/turquoise.jpg', 'description': 'Lagoon Wave'},
     {'name': 'NAVY', 'image_path': 'images/colors/navy.jpg', 'description': 'Deep Navy'}
-
-
 ]
 
 def color_picker(request):
+    """
+    Author: Lainey
+    Description: Displays a color of the day page with a randomly chosen color from the colors list.
+
+    Returns:
+        render: A render object that displays the color_picker.html template with the randomly chosen color and today's date.
+    """
     color = cache.get('daily_color')
     if not color:
         color = random.choice(colors)
         cache.set('daily_color', color, timeout=86400)  # Cache for 24 hours
-    today_date = timezone.now().strftime('%m-%d-%Y') 
+    today_date = timezone.now().strftime('%m-%d-%Y')  # how the date will be displyed on the page
     return render(request, 'fashion/color_picker.html', {'color': color, 'today_date': today_date})

@@ -1,23 +1,26 @@
+<!-- LAINEY (Some of this was used from my last project)-->
 {% extends 'base.html' %}
+
 {% block title %}Login{% endblock %}
 
 {% block content %} 
 {% if user.is_authenticated %}
-<script>
-    window.location.href = "{% url 'logout' %}";
-</script>
+    <!-- Redirect to logout page if user is already authenticated -->
+    <script>
+        window.location.href = "{% url 'logout' %}";
+    </script>
 {% endif %}
 
 {% load static %}
-<!-- Some of this was used from Lainey's last project -->
+
 <style>
+    /* Styling for the background image */
     html, body {
         margin: 0;
         padding: 0;
         height: 100%; /* Full height */
         overflow: hidden; /* Prevents scrolling */
     }
-
     .bg {
         background-image: url('https://cyathens.org/wp-content/uploads/2019/09/Copy-of-blog-featured-images-1170x650.png');
         background-repeat: no-repeat;
@@ -28,7 +31,6 @@
         min-height: 100vh;
         width: 100vw; /* Full width */
     }
-
     .container {
         width: 100%; /* Override width */
         max-width: 100%; /* Ensure it does not exceed the viewport width */
@@ -36,6 +38,7 @@
         margin: 0; /* Remove margins */
     }
 </style>
+
 <body>
     <div class="bg" style="background-image: url('https://cyathens.org/wp-content/uploads/2019/09/Copy-of-blog-featured-images-1170x650.png')">
         <div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh;">
@@ -48,7 +51,7 @@
                         <!-- Card body for padding and spacing -->
                         <h1 class="h3 mb-2 font-weight-normal text-center"><strong>Welcome! Please sign in.</strong></h1>
                         <!-- Heading for the login form -->
-                        <form method = "post">
+                        <form method="post">
                             {% csrf_token %} 
                             <!-- check for messages passed through the view -->
                             {% if messages %}
@@ -91,6 +94,4 @@
         </div>
     </div>
 </body>
-
 {% endblock %}
-

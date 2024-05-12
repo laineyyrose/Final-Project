@@ -1,11 +1,9 @@
+<!-- LAINEY (Some of this code was used form my last project)-->
 {% extends 'base.html' %}
 {%load static%}
 {% load l10n %}
-
 {% block title %}{{ pageuser.user.username }} - Profile{% endblock %}
-
 {% block content %}
-
 <style>
     .image-container {
     position: relative;
@@ -15,7 +13,6 @@
     text-align: center;
     left: 14%;
     }
-
     .background-image, .profile-image {
     position: absolute;
     top: 50%;
@@ -25,43 +22,35 @@
     height: 100%; /* Adjust if necessary */
     object-fit: cover; /* Ensures the image covers the container */
     display: inline-block;
-
     }
-
     .profile-image {
     width: 255px; /* Adjust based on your needs */
     height: 197px; /* Adjust based on your needs */
     top: 44%;
     left: 56%;
     }
-
     .center-column {
     margin: 0 auto; /* Auto margins on both sides */
     float: none; /* Avoids any floating behavior */
     text-align: center;
     }
-
     .icon-image {
     width: 30px; /* Adjust based on your needs */
     height: 30px; /* Adjust based on your needs */
     }
-
     .flex-container {
     display: flex;           /* Enables flexbox */
     align-items: center;     /* Vertically center aligns the items */
     justify-content: flex-start; /* Aligns items to the start of the flex container */
     gap: 10px;               /* Adds space between the items */
     }
-
     .itemcard {
     transition: transform 0.3s ease;
     }
-
     .itemcard:hover { /* hover is by gpt */
     transform: translateY(-5px); /* Adjust the distance you want the card to move */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
-
     .itemthumbnail {
     width: 250px;
     height: 250px;
@@ -69,13 +58,11 @@
     }
 
 </style>
-
 <div class="container mt-4"></div>
     <div class="row">
         <!-- Profile Picture and Username -->
         <div class="col-md-4 center-column">
             {% csrf_token %}
-            <!-- No longer looks clickable :)-->
                 <div class="image-container">
                     <img src="{% static 'images/frame.png' %}" alt="Background Image" class="background-image">
                     {% if pageuser.user.profile.profile_pic %}
@@ -96,7 +83,6 @@
                     <div class="flex-container">
                         <!-- Card body for padding and spacing -->
                         <h4><strong>{{ pageuser.user.username|slice:":15" }}</strong></h4>
-                        <!-- Put the pets and like and stuff here pls pls pls remember and read seamus -->
                         <!-- Displaying the user's details -->
                         {% if pageuser.user.profile.venmo_url %}
                             <a href="https://account.venmo.com/u/{{ pageuser.user.profile.venmo_url }}" title="{{ pageuser.user.profile.venmo_url }}" target="_blank"><img src="{% static 'images/venmo.png' %}" alt="Venmo" class="icon-image"></a>

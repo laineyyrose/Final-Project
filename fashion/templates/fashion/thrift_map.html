@@ -1,8 +1,9 @@
+<!-- LAINEY -->
 <!-- Help from GPT with styling -->
-
 {% extends 'base.html' %}
 {% block title %}Thrift Map{% endblock %}
 {% block content %}
+<!-- Styling for the card -->
 <style>
     .card {
     background: linear-gradient(to right, #c17bff, #e2c1ff);
@@ -10,17 +11,18 @@
     margin-bottom: 30px; /* Adds space below each card */
     }
 </style>
-
 <div class="container mt-4">
     <h1 class="page-title">Thrift Map</h1>
     <div class="iframe-container">
+        <!-- Popup message -->
         <div class="popup alert alert-primary shadow" role="alert" style="border-radius: 20px; overflow: hidden;">
             Welcome to the Thrift Map Explorer! 🗺️ Discover the best thrift stores around Sarasota! Click on the markers to see store details or scroll down for more information on each location. Find hidden gems and make your thrift shopping adventure exciting and rewarding!
         </div>
+        <!-- Google Maps iframe -->
         <iframe src="https://www.google.com/maps/d/u/1/embed?mid=1le73W5BUGoep0E785InwXJPVI-eVb9A&ehbc=2E312F" width="100%" height="480" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
     </div>
     
-    <!-- Example cards for locations -->
+    <!-- Cards for locations -->
     <div class="row mt-4">
         <div class="col-md-4">
             <div class="card">

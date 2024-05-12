@@ -143,3 +143,13 @@ class ItemViewTest(TestCase):
         self.assertEqual(response.context['item'], item)
         self.assertEqual(len(response.context['comments']), 2)
         self.assertEqual(response.context['editform'].instance, item)
+
+
+class HomeViewTest(TestCase):
+    def test_home_view(self):
+        client = Client()
+        url = reverse('home')
+        response = client.get(url)
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'shopping/home.html')

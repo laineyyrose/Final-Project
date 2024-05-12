@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.views import generic
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy, reverse
 from django.shortcuts import redirect
@@ -15,23 +14,80 @@ from shopping.models import Item
 
 
 def logout_view(request):
+    """
+    Author: Lainey
+    Logout view function that logs out the user and redirects to the login page.
+
+    Args:
+        request (HttpRequest): The request object for the current view.
+
+    Returns:
+        redirect: Redirects to the login page.
+    """
     logout(request)
     return redirect("login")
 
 class UserRegisterView(generic.CreateView):
-    form_class = SignUpForm
-    template_name = 'registration/register.html'
-    success_url = reverse_lazy('login')
+    """
+    Author: Lainey
+    View for user registration.
+
+    This view handles the registration of new users by using the SignUpForm.
+    After successful registration, the user is redirected to the login page.
+
+    Attributes:
+        form_class (class): The form class to use for user registration.
+        template_name (str): The name of the template to render for user registration.
+        success_url (str): The URL to redirect to after successful registration.
+    """
+
+    form_class = SignUpForm  # Use SignUpForm for user registration
+    template_name = 'registration/register.html'  # Render the register.html template
+    success_url = reverse_lazy('login')  # Redirect to the login page after successful registration
+
 
 class UserEditView(generic.UpdateView):
+    """
+    Author: Lainey
+    A view for editing user profiles.
+
+    This view allows users to edit their profile information.
+
+    Attributes:
+        form_class (class): The form class used for editing the profile.
+        template_name (str): The name of the template used for rendering the edit profile page.
+        success_url (str): The URL to redirect to after successfully editing the profile.
+
+    Methods:
+        get_object: Retrieves the user object to be edited.
+
+    """
+
     form_class = EditProfileForm
     template_name = 'registration/edit_profile.html'
     success_url = reverse_lazy('home_page')
 
     def get_object(self):
+        """
+        Retrieves the user object to be edited.
+
+        Returns:
+            User: The user object to be edited.
+
+        """
         return self.request.user
+
+
     
 class ShowProfilePageView(DetailView): #LAINEY MADE THIS ONE
+    """
+    Author: Lainey
+    View for displaying a user's profile page.
+
+    Attributes:
+        model (Profile): The model used for retrieving the user's profile.
+        template_name (str): The name of the template used for rendering the profile page.
+    """
     model = Profile
     template_name = 'registration/user_profile.html'
 
@@ -104,27 +160,59 @@ class ShowProfilePageView(DetailView): #LAINEY MADE THIS ONE
         return context
     
 class EditProfilePageView(generic.UpdateView):
+    """
+    Author: Lainey
+    A view for editing a user's profile page.
+    """
     model = Profile
     template_name = 'registration/edit_profile_page.html'
     fields = ['first_name', 'last_name', 'bio', 'profile_pic', 'pinterest_url', 'venmo_url']
+
     def get_success_url(self):
+        """
+        Returns the URL to redirect to after a successful form submission.
+        """
         # Assuming your Profile model has a `pk` to use for the URL
         return reverse('show_profile_page', kwargs={'pk': self.object.pk})
     
 
 class CreateProfilePageView(CreateView):
+    """
+    Author: Lainey
+    View for creating a user profile page.
+    """
     model = Profile
     form_class = ProfilePageForm
     template_name = 'registration/create_user_profile_page.html'
     
     def form_valid(self, form):
+        """
+        Called when form data is valid.
+        Sets the user attribute of the form instance to the current user.
+        """
         form.instance.user = self.request.user
         return super().form_valid(form)
     
     def get_success_url(self):
-        # Assuming your Profile model has a `pk` to use for the URL
+        """
+        Returns the URL to redirect to after a successful form submission.
+        Assumes the Profile model has a `pk` field to use for the URL.
+        """
         return reverse('show_profile_page', kwargs={'pk': self.object.pk})
     
 def logout_and_redirect(request):
+    """
+    Author: Lainey
+    Logs out the user and redirects them to the login page.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponseRedirect: A redirect response to the login page.
+    """
+    # Logout the user
     logout(request)
-    return redirect('login')  
+
+    # Redirect to the login page
+    return redirect('login')

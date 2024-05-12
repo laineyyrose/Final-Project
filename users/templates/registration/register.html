@@ -1,9 +1,8 @@
+<!-- LAINEY (Some of this code was used form my last project)-->
 {% extends 'base.html' %}
 {% block title %} Sign Up {% endblock %}
-
-
 {% block content %}
-<!-- Was also taken from Lainey's last project -->
+<!-- Styling for the background image -->
 <style>
     html, body {
         margin: 0;
@@ -11,7 +10,6 @@
         height: 100%; /* Full height */
         overflow: hidden; /* Prevents scrolling */
     }
-
     .bg {
         background-image: url('https://cyathens.org/wp-content/uploads/2019/09/Copy-of-blog-featured-images-1170x650.png');
         background-repeat: no-repeat;
@@ -22,7 +20,6 @@
         min-height: 100vh;
         width: 100vw; /* Full width */
     }
-
     .container {
         width: 100%; /* Override width */
         max-width: 100%; /* Ensure it does not exceed the viewport width */
@@ -30,35 +27,37 @@
         margin: 0; /* Remove margins */
     }
 </style>
-
 <body>
+    <!-- Background image container -->
     <div class="bg" style="background-image: url('https://cyathens.org/wp-content/uploads/2019/09/Copy-of-blog-featured-images-1170x650.png')">
+        <!-- Container for centering the content vertically and horizontally -->
         <div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh;">
-            <!-- Container for centering the content vertically and horizontally -->
+            <!-- Column for the login form -->
             <div class="col-md-8 col-lg-6">
+                <!-- Card for styling and containing the login form -->
                 <div class="card shadow" style="border-radius: 20px; overflow: hidden;">
-                    <!-- Card for styling and containing the login form -->
+                    <!-- Card body for padding and spacing -->
                     <div class="card-body p-5">
-                        <!-- Card body for padding and spacing -->
+                        <!-- Title for the registration form -->
                         <h1 class="h3 mb-2 font-weight-normal text-center"><strong>Register</strong></h1>
-                        <form method = "post">
+                        <!-- Registration form -->
+                        <form method="post">
                             {% csrf_token %} 
                             {% for field in form %}
                                 <!-- Looping through each form field -->
                                 <div class="mb-3">
                                     {{ field.label_tag }}
-                                    <!-- check for field errors-->
+                                    <!-- Check for field errors -->
                                     {% if field.errors %}
                                         <input type="{{ field.field.widget.input_type }}" name="{{ field.name }}" class="form-control is-invalid" id="{{ field.id_for_label }}" {% if field.value %}value="{{ field.value }}"{% endif %}>
                                         <div class="invalid-feedback">
-                                            <!-- for each error display an error -->
+                                            <!-- Display each error -->
                                             {% for error in field.errors %}
                                                 {{ error }}<br>
                                             {% endfor %}
-                                            <!-- loop through errors -->
                                         </div>
                                     {% else %}
-                                    <!-- if no errors display the content -->
+                                        <!-- Display the form field -->
                                         {{ field }}
                                     {% endif %}
                                     {% if field.help_text %}
@@ -66,11 +65,12 @@
                                     {% endif %}
                                 </div>
                             {% endfor %}
+                            <!-- Register button -->
                             <div class="text-center">
                                 <button class="btn btn-primary shadow rounded-pill">Register</button>
                             </div>
+                            <!-- Link for existing users to login -->
                             <div class="text-center mt-3">
-                                <!-- link for existing users to login-->
                                 <p>Have an account? Login <a href="{% url 'login' %}">Here</a>!</p>
                             </div>
                         </form>
@@ -80,6 +80,4 @@
         </div>
     </div>
 </body>
-
 {% endblock %}
-

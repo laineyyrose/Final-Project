@@ -1,6 +1,6 @@
 from django.urls import path, include
 from . import views
-from users import views as userviews #color_picker
+from users import views as userviews #this is to avoid conflicts
 
 urlpatterns = [
     path('weather/', views.weather, name='weather'),
