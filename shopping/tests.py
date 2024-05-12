@@ -8,8 +8,6 @@ from .forms import AddItem, EditItem, AddComment
 
 # Create your tests here.
 
-#TODO - GO BACK AND MAKE SURE THESE TESTS R ACCURTE LOL
-
 class ItemModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
