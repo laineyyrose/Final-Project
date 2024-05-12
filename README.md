@@ -39,7 +39,7 @@ python3 -m venv venv
 7. Then run `python manage.py runserver`. The console should indicate where it's being hosted. Usually this is `http://127.0.0.1:8000/`. Open this in a browser as it's running and you should be able to access the site. Ctrl+C in the console will quit the program.
 
 ### Deploying
-There are a lot of different ways to deploy a Django site. For this project we used a free [PythonAnywhere] (https://www.pythonanywhere.com) plan, so the deployment examples will centered around what we did. You can also view [PythonAnywhere's own deployment instructions](https://help.pythonanywhere.com/pages/DeployExistingDjangoProject).
+There are a lot of different ways to deploy a Django site. For this project we used a free [PythonAnywhere](https://www.pythonanywhere.com) plan, so the deployment examples will centered around what we did. You can also view [PythonAnywhere's own deployment instructions](https://help.pythonanywhere.com/pages/DeployExistingDjangoProject).
 
 1. Create an account with PythonAnywhere. You may want your username be named after your project. A free PythonAnywhere plan uses the users' username in this format: `username.pythonanywhere.com`.
 
