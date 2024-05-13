@@ -130,6 +130,9 @@ https://medium.com/@mustahibmajgaonkar/how-to-reset-django-migrations-6787b2a1e7
 https://stackoverflow.com/questions/65744877/noreversematch-at-reverse-for-profile-with-arguments-not-found-1-pa
 https://pylessons.com/django-login-logout
 
+I also used some of the code from our previous project
+https://github.com/Schweem/SE_Project2.git
+
 ANDY:
 
 OpenMeteo API: https://open-meteo.com/en/docs/#latitude=27.3364&longitude=-82.5306&current=temperature_2m,apparent_temperature&hourly=&daily=temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timezone=America%2FNew_York&forecast_days=1
@@ -173,4 +176,19 @@ https://github.com/laineyyrose/Final-Project/assets/122582580/9f93b8d3-afa7-4aac
 ## UML Diagram
 
 <img width="437" alt="UML" src="https://github.com/laineyyrose/Final-Project/assets/122582580/f92cf6b9-213b-4dde-be5c-248055f3ba9b">
+
+## Features
+
+### Fashion App
+Color of the Day: Displays a color of the day with a randomly chosen color for users to get inspiration for their outfit each day.
+Weather: Shows the weather for the current day and suggests an appropriate outfit based on it. 
+Thrift Map: Displays a custom google map with local thrift stores and their descriptions.
+
+## Shopping App
+Listings: Displays items that have been posted for users to buy
+Item: Displays sepecific items with their inofrmation (i.e. price, description, comments, etc.)
+
+## Users App
+Login/Registration: Creates account for new users and allows them to login when they return again.
+Profile Page: Displays a users information with links to their profile/venmo. Users can also edit this information at any time.
 
