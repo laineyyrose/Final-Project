@@ -91,3 +91,39 @@ Create a [personal access token (classic)](https://docs.github.com/en/enterprise
 
 Go back to your bash script and run `git push origin branchname`. You'll be prompted for your username and password. Enter your Github username as your username, but **enter your personal access token when prompted for your password**. This should allow you to push to the remote repository. 
 
+
+## Resources
+
+LAINEY:
+(I used this playlist and his github for most of the user functions)
+https://www.youtube.com/playlist?list=PLCC34OHNcOtr025c1kHSPrnP18YPB-NFi 
+https://github.com/danielkim2711/simple-blog.git
+
+https://docs.djangoproject.com/en/5.0/topics/auth/default/
+https://www.youtube.com/watch?v=H_cWdD-aXCQ&t=164s
+https://www.youtube.com/watch?v=WuyKxdLcw3w&t=3256s
+https://www.youtube.com/watch?v=FdVuKt_iuSI
+https://forum.djangoproject.com/t/showing-method-not-allowed-get-users-logout/26044
+https://stackoverflow.com/questions/60159817/django-database-migration-not-working-new-table-not-created
+https://medium.com/@mustahibmajgaonkar/how-to-reset-django-migrations-6787b2a1e723
+https://stackoverflow.com/questions/65744877/noreversematch-at-reverse-for-profile-with-arguments-not-found-1-pa
+https://pylessons.com/django-login-logout
+
+
+## Trailer
+https://github.com/laineyyrose/Final-Project/assets/122582580/9f93b8d3-afa7-4aac-bf3d-eccf6aafa039
+
+
+## Demo Video
+[![Watch the video](https://i.stack.imgur.com/Vp2cE.png)](https://www.youtube.com/watch?v=cWF2I7bIBWk)
+
+
+## System Architecture
+
+<img width="417" alt="System Architecture" src="https://github.com/laineyyrose/Final-Project/assets/122582580/2574f33a-0812-4612-8f10-18afa452b04d">
+
+
+## UML Diagram
+
+<img width="437" alt="UML" src="https://github.com/laineyyrose/Final-Project/assets/122582580/f92cf6b9-213b-4dde-be5c-248055f3ba9b">
+
