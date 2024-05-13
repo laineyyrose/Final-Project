@@ -109,6 +109,33 @@ https://medium.com/@mustahibmajgaonkar/how-to-reset-django-migrations-6787b2a1e7
 https://stackoverflow.com/questions/65744877/noreversematch-at-reverse-for-profile-with-arguments-not-found-1-pa
 https://pylessons.com/django-login-logout
 
+ANDY:
+
+OpenMeteo API: https://open-meteo.com/en/docs/#latitude=27.3364&longitude=-82.5306&current=temperature_2m,apparent_temperature&hourly=&daily=temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timezone=America%2FNew_York&forecast_days=1
+Raincard: https://mdbootstrap.com/docs/standard/extended/weather/
+Round Button Styling: https://codepen.io/jnbruno/pen/vNpPpW
+Floating Action Button: https://codepen.io/Gogh/pen/XzrNZd
+Inline Text Alignment: https://stackoverflow.com/questions/19871123/align-text-in-one-line
+Forced Float Formatting with Input: https://html.spec.whatwg.org/multipage/input.html#the-step-attribute
+Force Numbers in Number Input: https://stackoverflow.com/questions/18510845/maxlength-ignored-for-input-type-number-in-chrome
+Django Docs:
+Price Formatting on Display: https://docs.djangoproject.com/en/5.0/topics/i18n/formatting/#localize
+Form Widget Styling: https://docs.djangoproject.com/en/5.0/ref/forms/widgets/
+Timezone Display: https://docs.djangoproject.com/en/5.0/topics/i18n/timezones/
+Django URL Path: https://medium.com/@iamalisaleh/how-to-get-the-current-url-within-a-django-template-8270b977f280
+Post Details: https://tutorial.djangogirls.org/en/extend_your_application/
+Image Preview: https://www.tutorialspoint.com/preview-an-image-before-it-is-uploaded-in-javascript
+Deploy Disk Space Troubleshooting: https://www.pythonanywhere.com/forums/topic/27961/
+Static Fix: https://blog.pythonanywhere.com/60/
+GitHub Connect from PythonAnywhere Bash:
+https://jss367.github.io/python-anywhere-and-git.html
+https://docs.github.com/en/enterprise-server@3.11/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens
+Installation Documentation Format:
+https://github.com/Datalux/Osintgram
+https://github.com/Genymobile/scrcpy
+Chat GPT Links:
+Listings Feature & Forms Troubleshooting: https://chat.openai.com/share/76a10a00-5b84-4518-b838-5701d4102784
+Items Pages: https://chat.openai.com/share/f8583589-49f8-47ff-8437-f31d64319790
 
 ## Trailer
 https://github.com/laineyyrose/Final-Project/assets/122582580/9f93b8d3-afa7-4aac-bf3d-eccf6aafa039
