@@ -192,3 +192,25 @@ Item: Displays sepecific items with their inofrmation (i.e. price, description, 
 Login/Registration: Creates account for new users and allows them to login when they return again.
 Profile Page: Displays a users information with links to their profile/venmo. Users can also edit this information at any time.
 
+## Contributions
+LAINEY:
+- User registration and authentication
+- Login, register, create profile, profile, and edit profile pages
+- Most of Navbar
+- Home page
+- Thrift map page
+- Color of the day page
+- UML diagram
+- System architecture
+- Videos
+
+
+ANDY:
+- Deployment and installation guide
+- Weather page
+- Connecting to API
+- Listings page
+- Comments on items
+- Functional specification document
+  
+
