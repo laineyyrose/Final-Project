@@ -115,8 +115,7 @@ https://github.com/laineyyrose/Final-Project/assets/122582580/9f93b8d3-afa7-4aac
 
 
 ## Demo Video
-[![Watch the video](https://www.youtube.com/watch?v=cWF2I7bIBWk)]
-
+[![Watch the video]([https://i.stack.imgur.com/Vp2cE.png](https://www.google.com/imgres?q=youtube%20stock%20photos&imgurl=https%3A%2F%2Ft3.ftcdn.net%2Fjpg%2F03%2F00%2F38%2F90%2F360_F_300389048_dPZlxdHWAbKU1qD5Mt9jLB4eeh24K2Bo.jpg&imgrefurl=https%3A%2F%2Fstock.adobe.com%2Fimages%2Fyoutube-logo-on-a-white-background%2F300389048&docid=RnoYP541VF6VLM&tbnid=Sl4okNBMEvqheM&vet=12ahUKEwi1rPm-r4mGAxUETDABHV7FD7UQM3oECE8QAA..i&w=540&h=360&hcb=2&ved=2ahUKEwi1rPm-r4mGAxUETDABHV7FD7UQM3oECE8QAA))](https://www.youtube.com/watch?v=cWF2I7bIBWk)
 
 ## System Architecture
 
