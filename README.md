@@ -115,7 +115,7 @@ https://github.com/laineyyrose/Final-Project/assets/122582580/9f93b8d3-afa7-4aac
 
 
 ## Demo Video
-[![Watch the video](https://www.youtube.com/watch?v=cWF2I7bIBWk)
+[![Watch the video](https://www.youtube.com/watch?v=cWF2I7bIBWk)]
 
 
 ## System Architecture
