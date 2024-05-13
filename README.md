@@ -1,4 +1,4 @@
-<img width="637" alt="Screenshot 2024-05-12 at 8 25 48 PM" src="https://github.com/laineyyrose/Final-Project/assets/122582580/36f93df2-aaa2-425c-914f-64ffe6280f6f"># Four Winds Thrift
+# Four Winds Thrift
 This is a project by Lainey Rose and Andy Trinh for the Spring 2024. Four Winds Thrift is a commerce-focused platform designed to give New College students a specific site for selling and buying from each other. The goal of the project is to have an accessible, sustainable, and social experience in the New College second-hand market.
 
 ## Installation Instructions
