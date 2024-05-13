@@ -91,6 +91,27 @@ Create a [personal access token (classic)](https://docs.github.com/en/enterprise
 
 Go back to your bash script and run `git push origin branchname`. You'll be prompted for your username and password. Enter your Github username as your username, but **enter your personal access token when prompted for your password**. This should allow you to push to the remote repository. 
 
+### OpenMeteo API Implementation
+[OpenMeteo can be found here.](https://open-meteo.com/)
+
+1. Install the OpenMeteo API python dependencies.
+```
+pip install openmeteo-requests
+pip install requests-cache retry-requests numpy pandas
+```
+
+2. Find out what data you need from the API, and look at the documentation list: this will populate the params for the dictionary you have to pass in your request to the OpenMeteo API. The documentation website also allows you to check attributes and generate a dictionary for you.
+
+3. Use the provided OpenMeteo cache retry:
+```
+cache_session = requests_cache.CachedSession('.cache', expire_after = 3600)
+    retry_session = retry(cache_session, retries = 5, backoff_factor = 0.2)
+    openmeteo = openmeteo_requests.Client(session = retry_session)
+```
+
+4. Call the OpenMeteo API to a list and seperate the list into the dictionary using the [openmeteo-requests](https://github.com/open-meteo/python-requests/tree/main#readme) library.
+
+5. Process the dictionary any way you like.
 
 ## Resources
 
